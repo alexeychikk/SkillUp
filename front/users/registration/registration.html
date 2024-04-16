@@ -1,0 +1,342 @@
+
+<div style="position: absolute; background-color: #3F51B5; height: 232px; width: 100%;"></div>
+<div style="position: absolute; height: 100%; width: 100%;" id="toastElem"></div>
+<div layout="row" style="position: relative">
+    <div flex="15" flex-md="5" hide-sm></div>
+    <div flex
+         style="margin-top: 30px; margin-bottom: 30px;">
+        <md-card>
+            <md-subheader class="md-no-sticky"
+                          style="font-size: 20px; color: #3F51B5;
+                          margin: 0; text-align: center; letter-spacing: 2px;
+                          background-color: #EEEEEE">Регистрация: шаг {{step}} / 3</md-subheader>
+            <md-card-content ng-switch="step">
+                <div ng-switch-when="1">
+                    <form name="regForm" ng-if="!regDataSent">
+                        <div layout="row">
+                            <div layout="column" flex style="padding: 0 30px 0 20px;">
+                                <md-input-container>
+                                    <label>Имя</label>
+                                    <input required ng-model="reg.name" name="nameN" md-maxlength="64">
+                                    <div ng-messages="regForm.nameN.$error">
+                                        <div ng-message="required">Обязательное поле</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Никнейм</label>
+                                    <input required ng-model="reg.nick" name="nickN" md-maxlength="32">
+                                    <div ng-messages="regForm.nickN.$error">
+                                        <div ng-message="required">Обязательное поле</div>
+                                        <div ng-messages="exists">
+                                            <div ng-message="nick">Такой nick уже зарегистрирован</div>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>E-mail</label>
+                                    <input required ng-model="reg.email" name="emailN" md-maxlength="128">
+                                    <div ng-messages="regForm.emailN.$error">
+                                        <div ng-message="required">Обязательное поле</div>
+                                        <div ng-messages="exists">
+                                            <div ng-message="emailnotvalid">Неверный формат email! Пример: alexzin@mail.ru</div>
+                                            <div ng-message="email">Такой email уже зарегистрирован</div>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>
+                                        Пароль
+                                        <span style="color: #F44336" ng-show="checkResult.score < 2 && reg.password">слабый</span>
+                                        <span style="color: darkorange" ng-show="checkResult.score == 2 && reg.password">средний</span>
+                                        <span style="color: inherit;" ng-show="checkResult.score == 3 && reg.password">надежный</span>
+                                        <span style="color: green" ng-show="checkResult.score == 4 && reg.password">сверхнадежный</span>
+                                    </label>
+                                    <input required type="password" ng-model="reg.password" name="passwordN" md-maxlength="64">
+                                    <div ng-messages="regForm.passwordN.$error">
+                                        <div ng-message="required">Обязательное поле</div>
+                                        <div ng-messages="getPasswordStrong()">
+                                            <div ng-message="notstrong">Пароль недостаточно сложный</div>
+                                        </div>
+                                        <div ng-messages="passwordsEqual()">
+                                            <div ng-message="notequal">Пароли не совпадают</div>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Повторите пароль</label>
+                                    <input required type="password" ng-model="reg.rePassword" name="rePasswordN" md-maxlength="64">
+                                    <div ng-messages="regForm.rePasswordN.$error">
+                                        <div ng-message="required">Обязательное поле</div>
+                                        <div ng-messages="passwordsEqual()">
+                                            <div ng-message="notequal">Пароли не совпадают</div>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <div layout="row" layout-align="center center">
+                                    <md-button class="md-raised md-primary register-button"
+                                               ng-click="register()" aria-label="logout-btn">
+                                        Зарегистрироваться
+                                    </md-button>
+                                </div>
+                            </div>
+                            <div layout="column" layout-align="center center" flex style="padding: 0 20px 0 30px;">
+                                <fieldset layout-fill>
+                                    <legend style="text-align: center;">Войти через</legend>
+                                    <div  layout="column">
+                                        <md-button class="md-raised md-primary" href="/auth/facebook" target="_self">
+                                            <div layout="row" flex>
+                                                <div layout="row" layout-align="center center">
+                                                    <img src="/dist/images/ic_facebook.png">
+                                                </div>
+                                                <div layout="row" layout-align="center center" flex>
+                                                    <span class="social-btn-text">Facebook</span>
+                                                </div>
+                                            </div>
+                                        </md-button>
+                                        <md-button class="md-raised md-primary">
+                                            <div layout="row" flex>
+                                                <div layout="row" layout-align="center center">
+                                                    <img src="/dist/images/ic_vkontakte.png">
+                                                </div>
+                                                <div layout="row" layout-align="center center" flex>
+                                                    <span class="social-btn-text">ВКонтакте</span>
+                                                </div>
+                                            </div>
+                                        </md-button>
+                                        <md-button class="md-raised md-primary">
+                                            <div layout="row" flex>
+                                                <div layout="row" layout-align="center center">
+                                                    <img src="/dist/images/ic_google.png">
+                                                </div>
+                                                <div layout="row" layout-align="center center" flex>
+                                                    <span class="social-btn-text">Google</span>
+                                                </div>
+                                            </div>
+                                        </md-button>
+                                        <md-button class="md-raised md-primary">
+                                            <div layout="row" flex>
+                                                <div layout="row" layout-align="center center">
+                                                    <img src="/dist/images/ic_github.png">
+                                                </div>
+                                                <div layout="row" layout-align="center center" flex>
+                                                    <span class="social-btn-text">GitHub</span>
+                                                </div>
+                                            </div>
+                                        </md-button>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </form>
+                    <div ng-if="regDataSent" layout="row" layout-align="center center">
+                        На вашу почту было выслано письмо с инструкциями для подтверждения регистрации!
+                    </div>
+                </div>
+                <div ng-switch-when="2" layout="column">
+                    <md-content style="overflow: visible;">
+                    <form name="regForm2" layout="row">
+                        <div flex="25" layout="column">
+                            <div ng-if="reg.isImageRes" class="avatar-div">
+                                <img-crop image="reg.imgSrcRes" result-image="reg.imgCropRes" area-type="square"
+                                        result-image-size="225">
+                            </div>
+                            <div ng-if="!reg.isImageRes" layout="row" layout-align="center center"
+                                 style="opacity: 0.26; width: 225px; height: 225px; border: 2px dashed rgba(0, 0, 0, 0.26);">
+                                <i class="mdi mdi-account mdi-200"></i>
+                            </div>
+                            <div layout="row" layout-align="center center">
+                                <md-input-container flex style="margin-bottom: 0;">
+                                    <label>Ссылка</label>
+                                    <input type="text" ng-model="reg.imgSrc">
+                                </md-input-container>
+                                <md-button style="height: 25px;" class="expand-button" ng-click="loadImage()" aria-label="load-image">
+                                    <i class="mdi mdi-upload mdi-24 mdi-secondary"></i>
+                                </md-button>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span style="padding-bottom: 5px; color: rgba(0,0,0,0.54);">или</span>
+                            </div>
+                            <input type="file" id="fileInput" style="display: none;" name="photo"
+                                   onchange="angular.element(this).scope().handleFileSelect(this)">
+                            <md-button class="md-raised" ng-click="selectImage()" aria-label="select-image">Выберите изображение</md-button>
+                        </div>
+                        <div layout="column" flex style="padding-left: 15px;">
+                            <!--  GENERAL INFO  -->
+                            <div layout="row" layout-align="start center">
+                                <md-input-container flex>
+                                    <label>Ваш день рождения</label>
+                                    <input type="date" ng-model="reg.birthday">
+                                </md-input-container>
+                                <md-radio-group ng-model="reg.gender">
+                                    <div layout="row" layout-align="start start">
+                                        <md-radio-button style="margin-left: 10px;" value="male" class="md-primary">Мужчина</md-radio-button>
+                                        <md-radio-button style="margin-top: 0; margin-left: 10px;" value="female" class="md-accent">Женщина</md-radio-button>
+                                    </div>
+                                </md-radio-group>
+                            </div>
+                            <!--  LOCATION INFO  -->
+                            <div layout="row" layout-align="start center">
+                                <md-input-container flex>
+                                    <label>Город</label>
+                                    <input type="text" ng-model="reg.city">
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <label>Страна</label>
+                                    <input type="text" ng-model="reg.country">
+                                </md-input-container>
+                            </div>
+                            <!--  EDUCATION INFO  -->
+                            <div layout="row" layout-align="space-between center" style="margin: 16px 0 0 0;">
+                                <span class="add-info" style="margin-left: 3px;">Учебное заведение</span>
+                                <md-button class="md-icon-button" layout="row" layout-align="center center"
+                                           aria-label="addEducation" ng-click="addEducation()">
+                                    <i class="mdi mdi-plus mdi-24 md-hue-1 add-info"></i>
+                                    <md-tooltip>Добавить</md-tooltip>
+                                </md-button>
+                            </div>
+                            <div ng-repeat="ed in reg.education" class="list-item" style="margin-top: 8px;">
+                                <div layout="row">
+                                    <div flex>
+                                        <md-input-container class="md-block no-margin-bottom">
+                                            <label>Название учебного заведения</label>
+                                            <input ng-model="ed.name">
+                                        </md-input-container>
+                                        <md-input-container class="md-block no-margin-bottom no-margin-top">
+                                            <label>Специальность</label>
+                                            <input ng-model="ed.speciality">
+                                        </md-input-container>
+                                        <div layout="row" layout-align="start center">
+                                            <md-input-container class="no-margin-top no-margin-bottom" flex>
+                                                <label>Год начала</label>
+                                                <input type="number" ng-model="ed.startYear" max="{{maxYear}}" min="{{minYear}}" step="1">
+                                            </md-input-container>
+                                            <md-input-container class="no-margin-top no-margin-bottom" style="margin-left: 20px;" flex>
+                                                <label>Год окончания</label>
+                                                <input type="number" ng-model="ed.endYear" max="{{maxYear}}" min="{{minYear}}" step="1">
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <md-button class="md-icon-button" layout="row" layout-align="center center"
+                                               aria-label="removeEducation" ng-click="removeEducation($index)">
+                                        <i class="mdi mdi-close-circle-outline mdi-24 mdi-secondary"></i>
+                                        <md-tooltip>Убрать</md-tooltip>
+                                    </md-button>
+                                </div>
+                                <md-divider style="background-color: #3D5AFE" ng-if="!$last"></md-divider>
+                            </div>
+                            <!--  WORK INFO  -->
+                            <div layout="row" layout-align="space-between center" style="margin: 16px 0 0 0;">
+                                <span class="add-info" style="margin-left: 3px;">Компания</span>
+                                <md-button class="md-icon-button" layout="row" layout-align="center center"
+                                           aria-label="addWork" ng-click="addWork()">
+                                    <i class="mdi mdi-plus mdi-24 md-hue-1 add-info"></i>
+                                    <md-tooltip>Добавить</md-tooltip>
+                                </md-button>
+                            </div>
+                            <div ng-repeat="wo in reg.work" class="list-item" style="margin-top: 8px;">
+                                <div layout="row">
+                                    <div flex>
+                                        <md-input-container class="md-block no-margin-bottom">
+                                            <label>Название компании</label>
+                                            <input ng-model="wo.company">
+                                        </md-input-container>
+                                        <md-input-container class="md-block no-margin-bottom no-margin-top">
+                                            <label>Должность</label>
+                                            <input ng-model="wo.position">
+                                        </md-input-container>
+                                        <div layout="row" layout-align="start center">
+                                            <md-input-container class="no-margin-top no-margin-bottom" flex>
+                                                <label>Дата начала</label>
+                                                <input type="date" ng-model="wo.startDate" class="edit-date">
+                                            </md-input-container>
+                                            <md-input-container class="no-margin-top no-margin-bottom" style="margin-left: 20px;" flex>
+                                                <label>Дата окончания</label>
+                                                <input type="date" ng-model="wo.endDate" class="edit-date">
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <md-button class="md-icon-button" layout="row" layout-align="center center"
+                                               aria-label="removeWork" ng-click="removeWork($index)">
+                                        <i class="mdi mdi-close-circle-outline mdi-24 mdi-secondary"></i>
+                                        <md-tooltip>Убрать</md-tooltip>
+                                    </md-button>
+                                </div>
+                                <md-divider style="background-color: #3D5AFE" ng-if="!$last"></md-divider>
+                            </div>
+
+                            <div layout="row" layout-align="center center">
+                                <md-button class="md-raised md-primary" ng-click="goToStep3()">Далее >></md-button>
+                            </div>
+                        </div>
+                    </form>
+                    </md-content>
+                </div>
+                <div ng-switch-when="3">
+                    <form>
+                        <div class="md-whiteframe-z1">
+                            <md-toolbar>
+                                <div class="md-toolbar-tools" layout="row" layout-align="space-between center" layout-padding>
+                                    <span>Выбирете навыки, которые вы хотите получить</span>
+                                    <span>
+                                        <md-autocomplete
+                                                md-no-cache="true"
+                                                md-selected-item="query.selectedItem"
+                                                md-search-text="query.searchText"
+                                                md-items="skill in query.search(query.searchText)"
+                                                md-selected-item-change="query.selectedItemChanged(skill)"
+                                                md-item-text="skill.title"
+                                                md-min-length="0"
+                                                placeholder="Поиск навыков...">
+                                            <md-item-template>
+                                                <span md-highlight-text="query.searchText" md-highlight-flags="^i">{{skill.title}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                Не найдено совпадений для "{{query.searchText}}".
+                                            </md-not-found>
+                                        </md-autocomplete>
+                                    </span>
+                                </div>
+                            </md-toolbar>
+
+                            <div layout="column" layout-align="center center" ng-if="currentSkill">
+                                <div ng-if="currentSkill.parents" layout-padding>
+                                    <skup-skill-button ng-repeat="skill in currentSkill.parents" id="skill.id" type="need"
+                                                  with-add="!skill.added" on-add="addNeed" ng-click="setToCurrent(skill)"></skup-skill-button>
+                                </div>
+                                <div class="current">
+                                    <skup-skill-button id="currentSkill.id" type="root" with-add="!currentSkill.added" ng-click="addNeed(currentSkill.id)">
+                                    </skup-skill-button>
+                                </div>
+                                <div ng-if="currentSkill.children" layout-padding>
+                                    <skup-skill-button ng-repeat="skill in currentSkill.children" id="skill.id" type="need"
+                                                  with-add="!skill.added" on-add="addNeed" ng-click="setToCurrent(skill)"></skup-skill-button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="md-whiteframe-z1" layout="column" style="margin-top: 20px;" ng-if="dataNeeds.needs.length">
+                            <md-toolbar layout="row" layout-align="space-between center">
+                                <h3 class="md-toolbar-tools">Выбранные навыки</h3>
+                                <md-button class="header-button" style="margin-right: 10px" ng-click="erase()" aria-label="erase-needs-list">
+                                    <i class="mdi mdi-delete mdi-24"></i>
+                                    <md-tooltip>Очистить список выбраных навыков</md-tooltip>
+                                </md-button>
+                            </md-toolbar>
+                            <div layout="column">
+                                <div class="selected-needs" layout="row">
+                                    <skup-skill-button ng-repeat="id in dataNeeds.needs" id="id" type="need"
+                                                  with-remove="true" ng-click="removeNeed(id)" layout-margin></skup-skill-button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-align="center center" style="margin-top: 30px;">
+                            <md-button class="md-raised md-primary" ng-click="done()">Готово</md-button>
+                        </div>
+                    </form>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div flex="15" flex-md="5" hide-sm></div>
+</div>

@@ -1,0 +1,35 @@
+<md-dialog style="width: 50%" aria-label="delete-skill-dialog" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Удалить умения</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()" aria-label="close-dialog">
+                <i class="mdi mdi-close mdi-24"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form name="deleteSkillForm">
+                <md-chips class="adding-skills-chips" ng-model="chips.selectedSkillsForDeleting" md-autocomplete-snap md-require-match>
+                    <md-autocomplete
+                            md-selected-item="chips.selectedSkill"
+                            md-search-text="chips.searchSkillTitle"
+                            md-items="skill in querySearch(chips.searchSkillTitle, chips.allChildrenNames)"
+                            md-item-text="skill.title"
+                            placeholder="Выберите умение">
+                        <span md-highlight-text="chips.searchSkillTitle">{{skill.title}}</span>
+                    </md-autocomplete>
+                    <md-chip-template>
+                        <strong>{{$chip.title}}</strong>
+                    </md-chip-template>
+                </md-chips>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button class="md-raised md-primary" ng-click="confirm()">
+            Удалить
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

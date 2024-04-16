@@ -1,0 +1,56 @@
+<md-dialog style="width: 50%" aria-label="add-skill-dialog" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Добавить новые умения</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()" aria-label="close-dialog">
+                <i class="mdi mdi-close mdi-24"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form name="addSkillForm">
+                <md-input-container style="width: 100%;">
+                    <input type="text" ng-model="adding.title" name="title" placeholder="Название" required>
+                    <div ng-messages="addSkillForm.title.$error">
+                        <div ng-message="required">Обязательное поле</div>
+                    </div>
+                </md-input-container>
+
+                <md-chips class="adding-skills-chips" ng-model="chips.selectedParents" md-autocomplete-snap md-require-match>
+                    <md-autocomplete
+                            md-selected-item="chips.selectedParent"
+                            md-search-text="chips.searchParentTitle"
+                            md-items="skill in querySearch(chips.searchParentTitle, chips.allParentsNames)"
+                            md-item-text="skill.title"
+                            placeholder="Добавить родительское умение">
+                        <span md-highlight-text="chips.searchParentTitle">{{skill.title}}</span>
+                    </md-autocomplete>
+                    <md-chip-template>
+                        <strong>{{$chip.title}}</strong>
+                    </md-chip-template>
+                </md-chips>
+
+                <md-chips class="adding-skills-chips" ng-model="chips.selectedChildren" md-autocomplete-snap md-require-match>
+                    <md-autocomplete
+                            md-selected-item="chips.selectedChild"
+                            md-search-text="chips.searchChildTitle"
+                            md-items="skill in querySearch(chips.searchChildTitle, chips.allChildrenNames)"
+                            md-item-text="skill.title"
+                            placeholder="Добавить дочерние умение">
+                        <span md-highlight-text="chips.searchChildTitle">{{skill.title}}</span>
+                    </md-autocomplete>
+                    <md-chip-template>
+                        <strong>{{$chip.title}}</strong>
+                    </md-chip-template>
+                </md-chips>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button class="md-raised md-primary" ng-click="confirm()">
+            Добавить
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

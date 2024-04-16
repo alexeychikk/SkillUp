@@ -1,0 +1,46 @@
+<div layout="column">
+    <md-content class="comment-item-container thin-scroll" ng-if="src.comments.length">
+        <div class="comment-item" ng-repeat="comment in src.comments" layout="column"
+             ng-mouseenter="comment.mouseOn = true" ng-mouseleave="comment.mouseOn = false">
+            <div layout="row" flex>
+                <div flex>
+                    <a ng-href="/users/{{comment.author}}" style="text-decoration: none; outline: none;">
+                        <img ng-if="comment.author_avatar" alt="{{comment.author}}" class="comment-avatar" ng-src="/avatars/{{comment.author_avatar}}">
+                        <i class="mdi mdi-account-circle mdi-36" ng-if="!comment.author_avatar" style="color: rgba(0, 0, 0, .54);"></i>
+                    </a>
+                </div>
+                <div class="comment-content-container" layout="column" flex="85">
+                    <span class="comment-author-name" ng-bind="comment.author_name"></span>
+                    <span class="comment-content" ng-bind="comment.content"></span>
+                </div>
+                <div class="comment-time-elapsed" flex="10" ng-if="!comment.mouseOn">
+                    <span ng-bind="comment.timeElapsed" style="float: right"></span>
+                </div>
+                <div layout="row" flex="10" style="position: relative;" ng-if="comment.mouseOn">
+                    <skup-like-button type="comment" id="comment.id" likes="comment.likes" liked="comment.liked" size="18"
+                                 style="position: absolute; top: -5px; left: 12px;"></skup-like-button>
+                    <md-button class="md-icon-button" aria-label="comment-like" style="position: absolute; top: -10px; right: -27px;">
+                        <i class="mdi mdi-dots-vertical mdi-18"></i>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </md-content>
+    <div class="comment-item-container no-comments" layout="row" layout-align="center center" ng-if="!src.comments.length">
+        Никто еще не оставил комментариев
+    </div>
+    <div layout="row" class="comment-wrap" flex>
+        <div layout="row" flex>
+            <div>
+                <img ng-if="loggedUser.avatar" alt="{{loggedUser.nick}}" class="comment-avatar" ng-src="/avatars/{{loggedUser.avatar}}">
+                <i class="mdi mdi-account-circle mdi-36" ng-if="!loggedUser.avatar" style="color: rgba(0, 0, 0, .54);"></i>
+            </div>
+            <form class="comment-form" flex>
+                <md-input-container class="md-block" layout-fill md-no-float>
+                    <textarea id="comment" ng-model="src.comment" placeholder="Добавьте коментарий..."></textarea>
+                </md-input-container>
+            </form>
+        </div>
+        <md-button class="comment-button md-primary" ng-click="src.addComment()" ng-disabled="!src.comment">Отправить</md-button>
+    </div>
+</div>

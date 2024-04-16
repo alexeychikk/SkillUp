@@ -1,0 +1,65 @@
+
+<div style="position: relative;">
+    <div layout="row">
+        <div flex="{{sidenavVisible ? 10 : 15}}" flex-md="5" hide-sm class="content-main-side"></div>
+        <div flex>
+            <div ng-switch="navtabs.selected">
+                <div ng-switch-when="0">
+                    <div class="secondary-header">Общие интересы</div>
+                    <div ng-if="users && users.length && !scrollLoader.loaded" style="position: fixed; z-index: 99; top: 112px; left: 210px;
+                         width: 100%; height: 100%; background-color: rgba(255, 255, 255, .54);"></div>
+                    <div layout="row" layout-align="center center" ng-if="!scrollLoader.loaded"
+                            style="position: fixed; z-index: 100; top: 188px; left: 0; width: 100%;">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                    <md-grid-list style="margin-top: 24px; margin-left: -3px;" md-cols="4" md-row-height="230px" md-gutter="24px">
+                        <md-grid-tile ng-repeat="user in users"
+                                      md-rowspan="{{user.expanded ? 2 : 1}}"
+                                      md-colspan="{{user.expanded ? 2 : 1}}"
+                                      style="transition: all 0.3s ease-in-out;">
+                            <md-card layout="column" layout-align="start center" class="user-card"
+                                     ng-click="goToUserPage(user.id)" ng-class="{'expanded': user.expanded}" ng-mouseenter="user.expandVisible = true"
+                                    ng-mouseleave="user.expandVisible = false">
+                                <md-button class="md-icon-button expand-button rotate-base" layout="row" layout-align="center center"
+                                           ng-click="expand(user)" ng-class="{'rotate-btn': user.expanded}"
+                                           aria-label="editInfo" ng-if="user.expandVisible || user.expanded">
+                                    <i class="mdi mdi-chevron-down mdi-24 mdi-secondary"></i>
+                                </md-button>
+                                <img ng-if="user.avatar" alt="{{user.nick}}" ng-src='/avatars/{{user.avatar}}' class="avatar"
+                                     onerror="angular.element(this).scope().user.avatar = null">
+                                <div ng-if="!user.avatar" class="avatar">
+                                    <div class="empty"><i class="mdi mdi-account-circle"></i></div>
+                                </div>
+                                <md-card-content layout="column" layout-align="start center" style="padding-bottom: 0;">
+                                    <div class="name">{{user.name}}</div>
+                                    <div ng-if="user.expanded" class="nick">#{{user.nick}}<span style="margin-left: 8px;"></span>exp: <span class="exp">{{user.exp}}</span></div>
+                                    <div class="secondary" layout="row" layout-align="center center">
+                                        <div style="margin-right: 16px;">Умею: <span style="color: #3F51B5">{{user.skills.length}}</span></div>
+                                        <div>Хочу: <span style="color: #E91E63">{{user.needs.length}}</span></div>
+                                    </div>
+                                </md-card-content>
+                                <div ng-if="user.expanded" flex class="skills thin-scroll">
+                                    <div layout="row" layout-align="start start" layout-wrap>
+                                        <skup-skill-button ng-repeat="skill in user.skills" id="skill.skill_id" type="skill"
+                                                      count="skill.count"></skup-skill-button>
+                                    </div>
+                                    <div layout="row" layout-align="start start" layout-wrap style="margin-top: 8px;">
+                                        <skup-skill-button ng-repeat="need in user.needs" id="need.skill_id" type="need"
+                                                      ng-if="need.count > 0" count="need.count"></skup-skill-button>
+                                    </div>
+                                </div>
+                                <md-button class="md-icon-button message" layout="row" layout-align="center center"
+                                           aria-label="sendMessage" ng-if="user.expanded">
+                                    <i class="mdi mdi-message-reply-text mdi-24px mdi-secondary"></i>
+                                </md-button>
+                                <md-button class="subscribe">Подписаться</md-button>
+                            </md-card>
+                        </md-grid-tile>
+                    </md-grid-list>
+
+                </div>
+            </div>
+        </div>
+        <div flex="{{sidenavVisible ? 10 : 15}}" flex-md="5" hide-sm class="content-main-side"></div>
+    </div>
+</div>

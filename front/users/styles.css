@@ -1,0 +1,926 @@
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.info-card {
+    background-color: #FAFAFA;
+    margin-top: 0;
+    margin-left: 0;
+    transition: all 0.3s ease-in-out;
+    padding-bottom: 8px;
+}
+
+.info-card.editing {
+    background-color: #FFF;
+}
+
+.info-card .md-title {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.info-card .md-icon-button {
+    margin: 0;
+    padding: 0;
+}
+
+.info-card md-card-avatar {
+    margin: 0 !important;
+}
+
+.info-card md-card-header {
+    padding-bottom: 0;
+}
+
+.info-card md-card-content {
+    margin-left: 10px;
+    padding-top: 0;
+}
+
+.info-card md-card-content .md-subhead {
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 16px;
+    color: rgba(0, 0, 0, .54);
+}
+
+.info-card md-card-content .list-item {
+    margin-top: 16px;
+}
+
+.info-card md-card-content .list-item .secondary {
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .54);
+}
+
+.info-card.main {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    margin: 0;
+    height: 200px;
+    background: linear-gradient(#3F51B5, #1A237E);
+    color: white;
+    padding-bottom: 24px;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main.no-radius {
+    border-radius: 0;
+}
+
+.info-card.main .background {
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main .avatar {
+    background-color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+    position: relative;
+    margin-right: 16px;
+    margin-left: 24px;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main .avatar i {
+    max-width: none !important;
+    font-size: 60px !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main .name {
+    font-size: 30px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main .nick {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease-in-out;
+}
+.info-card.main .exp {
+    color: #E91E63;
+}
+
+.info-card.main-info {
+    height: 280px;
+    margin-top: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main-info .background {
+    height: 140px;
+    width: 100%;
+    background: #3F51B5;
+    background: linear-gradient(#1A237E, #3F51B5);
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main-info .avatar {
+    background-color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    height: 120px;
+    margin-top: -62px;
+    width: 120px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main-info .avatar.own {
+    margin-top: -118px;
+}
+
+.info-card.main-info .avatar i {
+    max-width: none !important;
+    font-size: 130px !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main-info .name {
+    font-size: 24px;
+    overflow: hidden;
+    padding-top: 16px;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-card.main-info .nick {
+    color: rgba(0, 0, 0, 0.54);
+    margin: 0 16px;
+    overflow: hidden;
+    padding-top: 8px;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease-in-out;
+}
+
+.add-info {
+    font-weight: 600;
+    color: #3D5AFE;
+}
+
+.small-input {
+    margin: 0;
+    padding: 0;
+    height: 24px;
+}
+
+.no-margin-top {
+    margin-top: 0;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0;
+}
+
+.edit-date {
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .20);
+    outline: none;
+}
+
+.edit-date:focus {
+    border-width: 2px;
+    border-color: #106CC8;
+    outline: none;
+}
+
+.ican {
+    color: rgba(0, 0, 0, 0.54);
+    font-weight: 600;
+}
+
+.count-button {
+    font-size: 12px;
+    margin: 0 20px 0 5px;
+    padding: 0 5px 0 5px;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    line-height: normal !important;
+}
+
+.count-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.register-area {
+    padding-left: 20px;
+}
+
+.register-button {
+    margin: 10px 0 0 0;
+}
+
+.social-btn-text {
+    margin-left: -29px;
+}
+
+.tabs {
+    width: 650px;
+    float: none;
+    list-style: none;
+    position: relative;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+
+.tabs li {
+    float: left;
+    display: block;
+}
+
+.tabs input[type="radio"] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.tabs label {
+    color: white;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 4px 4px 0 0;
+    font-size: 14px;
+    font-weight: normal;
+    text-transform: uppercase;
+    background: #9FA8DA;
+    cursor: pointer;
+    position: relative;
+    top: 5px;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+.tabs label:hover {
+    background: #8C9EFF;
+}
+
+.tabs [id^="tab"]:checked + label {
+    top: 0;
+    padding-top: 10px;
+    background: #3F51B5;
+}
+
+.tabs [id^="tab"]:checked ~ [id^="tab-content"] {
+    display: block;
+}
+
+.info-list {
+    padding: 0;
+}
+
+.info-list md-list-item {
+    min-height: 54px;
+    padding: 15px 0 15px 0;
+}
+
+.info-divider {
+    margin: 10px 0 10px 0;
+}
+
+.info-header {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.info-empty {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+.not-last {
+    margin-bottom: 5px;
+}
+
+.edit-button {
+    margin: 0 0 0 5px;
+    padding: 0;
+    min-width: 0;
+    min-height: 0;
+    line-height: normal;
+}
+
+.avatar-div {
+    width: 225px;
+    height: 225px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.54);
+    background-color: #FAFAFA;
+}
+
+.users-list.ng-enter,
+.users-list.ng-leave {
+    -webkit-transition: 500ms cubic-bezier(0.250, 0.750, 0.750, 0.250) all;
+    -moz-transition: 500ms cubic-bezier(0.250, 0.750, 0.750, 0.250) all;
+    -ms-transition: 500ms cubic-bezier(0.250, 0.750, 0.750, 0.250) all;
+    -o-transition: 500ms cubic-bezier(0.250, 0.750, 0.750, 0.250) all;
+    transition: 500ms cubic-bezier(0.250, 0.750, 0.750, 0.250) all;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+}
+
+.users-list.ng-leave.users-list.ng-leave-active,
+.users-list.ng-enter {
+    opacity: 0;
+    height: auto;
+    max-height: 0;
+}
+
+.users-list.ng-enter.ng-enter-active,
+.users-list.ng-leave {
+    opacity: 1;
+    max-height: 100px;
+}
+
+.login-social-btn {
+    margin: 0 10px 0 0;
+    padding: 3px 0 0 0;
+    min-width: 0;
+    min-height: 0;
+    line-height: normal;
+    width: 35px;
+    height: 35px;
+}
+
+.admin-header {
+    color: white;
+    text-align: center;
+    font-weight: 400;
+    font-size: 26px;
+}
+
+.admin-sidenav {
+    background-color: rgb(63, 81, 181);
+    min-height: calc(100vh - 64px);
+    z-index: 0;
+}
+
+md-content[role="navigation"] {
+    background-color: rgb(63, 81, 181);
+    max-height: calc(100vh - 110px);;
+}
+
+#db-name {
+    color: rgba(255, 255, 255, 0.54);
+}
+
+.admin-sidenav md-divider {
+    background-color: rgb(40, 53, 147);
+}
+
+.sidenav-list {
+    padding: 0;
+}
+
+.sidenav-list md-list-item {
+    padding: inherit;
+}
+
+.sidenav-button {
+    margin: 0 !important;
+    background-color: rgb(63, 81, 181) !important;
+    color: white;
+    border-radius: 0 !important;
+    height: 48px !important;
+    border-bottom: solid 1px rgb(40, 53, 147);
+}
+
+.sidenav-button:hover,
+.sidenav-button:focus {
+    background-color: rgb(40, 53, 147) !important;
+}
+
+a[role="button"] {
+    text-decoration: none !important;
+    outline: none;
+}
+
+a[role="button"] h1:hover {
+    color: #c7d7db !important;
+}
+
+.sidenav-button span {
+    float: left;
+    height: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.sidenav-button i {
+    float: right;
+    height: auto;
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+
+.column-item {
+    border-bottom: solid 1px rgb(40, 53, 147);
+}
+
+.column-item p {
+    float: left;
+    height: auto;
+    color: white;
+    padding-left: 30px;
+}
+
+.column-item button {
+    margin: 0 20px 0 0 !important;
+    background-color: rgb(63, 81, 181) !important;
+    color: white;
+    border-radius: 10px !important;
+    height: 36px;
+    width: auto;
+    min-width: unset;
+    min-height: unset;
+    vertical-align: middle;
+    padding-top: 4px;
+    padding-bottom: 6px;
+}
+
+.column-item button:hover {
+    background-color: rgb(40, 53, 147) !important;
+}
+
+#tables {
+    padding: 0 16px;
+    max-width: 78%;
+    min-width: 78%;
+}
+
+#tables md-card {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+#tables md-card > md-card-content {
+    overflow-x: auto;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0;
+}
+
+#tables md-card > md-card-content > table {
+    border-collapse: collapse;
+    min-width: 100%;
+}
+
+#tables md-card > md-card-content > table > thead {
+    color: rgba(0, 0, 0, 0.54);
+    text-align: left;
+}
+
+#tables md-card > md-card-content > table > thead > tr > th {
+    border-bottom: solid 2px #EEEEEE;
+    height: 47px;
+    max-height: 47px;
+    padding: 4px 28px 4px 0;
+    font-weight: normal !important;
+    font-size: 15px;
+    white-space: nowrap;
+    outline: none;
+    cursor: pointer;
+}
+
+#tables md-card > md-card-content > table > thead > tr > th:hover {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+#tables md-card > md-card-content > table > thead > tr > th:hover .sort-icon {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+#tables md-card > md-card-content > table > tbody > tr:hover {
+    background-color: #EEEEEE;
+}
+
+.selected-row {
+    background-color: #F5F5F5;
+}
+
+#tables md-card > md-card-content > table > tbody > tr > td {
+    border-bottom: solid 2px #EEEEEE;
+    height: 38px;
+    padding: 4px 28px 4px 28px;
+}
+
+#tables md-card > md-card-content > table > tbody > tr > td > div {
+    white-space: nowrap;
+    max-height: 38px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#tables md-card > md-card-header {
+    max-height: 64px;
+    height: 64px;
+    position: relative;
+    overflow: hidden;
+}
+
+.table-header > h2 {
+    vertical-align: middle;
+    margin: 0;
+}
+
+.table-header-modified > div {
+    vertical-align: middle;
+    margin: 0;
+    color: rgba(66, 133, 244, 255);
+}
+
+.table-header-modified > span,
+.table-header > span {
+    vertical-align: middle;
+    width: auto;
+    padding-right: 12px;
+}
+
+.header-input {
+    padding: 0 24px 0 0;
+}
+
+.header-input > input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+.header-select {
+    padding-right: 12px;
+}
+
+.table-header,
+.table-header-modified {
+    position: absolute;
+    width: 100%;
+    height: 64px;
+    background-color: rgba(232, 240, 254, 255);
+    padding-left: 32px;
+}
+
+.table-header-modified.ng-enter {
+    -webkit-animation: modified_enter_sequence 0.5s cubic-bezier(0.25, 0.5, 0.5, 1); /* Safari/Chrome */
+    animation: modified_enter_sequence 0.5s cubic-bezier(0.25, 0.5, 0.5, 1); /* IE10+ and Future Browsers */
+}
+
+@-webkit-keyframes modified_enter_sequence {
+    from {
+        top: 64px;
+    }
+    to {
+        top: 0;
+    }
+}
+
+@keyframes modified_enter_sequence {
+    from {
+        top: 64px;
+    }
+    to {
+        top: 0;
+    }
+}
+
+.table-header-modified.ng-leave {
+    -webkit-animation: modified_leave_sequence 0.5s cubic-bezier(0.25, 0.5, 0.5, 1); /* Safari/Chrome */
+    animation: modified_leave_sequence 0.5s cubic-bezier(0.25, 0.5, 0.5, 1); /* IE10+ and Future Browsers */
+}
+
+@-webkit-keyframes modified_leave_sequence {
+    from {
+        top: 0;
+    }
+    to {
+        top: 64px;
+    }
+}
+
+@keyframes modified_leave_sequence {
+    from {
+        top: 0;
+    }
+    to {
+        top: 64px;
+    }
+}
+
+.table-header.ng-leave {
+    -webkit-animation: leave_sequence 0.5s cubic-bezier(0.25, 0.5, 0.5, 1); /* Safari/Chrome */
+    animation: leave_sequence 0.5s cubic-bezier(0.25, 0.5, 0.5, 1); /* IE10+ and Future Browsers */
+}
+
+@-webkit-keyframes leave_sequence {
+    from {
+        bottom: 0;
+    }
+    to {
+        bottom: 64px;
+    }
+}
+
+@keyframes leave_sequence {
+    from {
+        bottom: 0;
+    }
+    to {
+        bottom: 64px;
+    }
+}
+
+.table-header.ng-enter {
+    -webkit-animation: enter_sequence 0.5s cubic-bezier(0.25, 0.5, 0.5, 1); /* Safari/Chrome */
+    animation: enter_sequence 0.5s cubic-bezier(0.25, 0.5, 0.5, 1); /* IE10+ and Future Browsers */
+}
+
+@-webkit-keyframes enter_sequence {
+    from {
+        bottom: 64px;
+    }
+    to {
+        bottom: 0;
+    }
+}
+
+@keyframes enter_sequence {
+    from {
+        bottom: 64px;
+    }
+    to {
+        bottom: 0;
+    }
+}
+
+#tables md-card > md-card-footer {
+    height: 56px;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 15px;
+}
+
+.db-table-select {
+    height: 17px;
+    margin: 0;
+}
+
+.db-table-select:focus .md-select-label {
+    padding: 0;
+    color: inherit !important;
+    border: none;
+}
+
+.db-table-select > md-select-label,
+.db-table-select.md-default-theme:not([disabled]):focus .md-select-label {
+    padding: 0;
+    border: none;
+    text-align: right;
+}
+
+.db-table-select > md-select-label .md-select-icon {
+    width: 15px;
+}
+
+#tables img {
+    width: 48px;
+    height: 48px;
+}
+
+.cell-for-padding {
+    min-width: 32px;
+    padding: 0 !important;
+}
+
+.table-checkbox {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.table-checkbox-container {
+    padding: 0 !important;
+}
+
+.header-button {
+    border-radius: 10px !important;
+    height: 36px;
+    width: auto;
+    min-width: unset;
+    min-height: unset;
+    margin: 0 6px 0 6px;
+    padding: 4px 6px 6px 6px;
+    vertical-align: middle;
+}
+
+.counter {
+    padding-left: 32px;
+    padding-right: 20px;
+}
+
+.table-img {
+    max-height: 38px;
+    max-width: 38px;
+}
+
+.edit-button-span {
+    width: 30px;
+    min-width: 30px;
+    height: 24px;
+    min-height: 24px;
+}
+
+.current {
+    margin: 32px;
+}
+
+.selected-needs {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.user-card {
+    position: relative;
+    min-width: 200px;
+    min-height: 230px;
+    width: 200px;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.user-card .expand-button {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.user-card .avatar {
+    width: 90px;
+    height: 90px;
+    margin-top: 24px;
+    transition: all 0.3s ease-in-out;
+}
+
+.user-card img {
+    border-radius: 50%;
+}
+
+.user-card .avatar .empty {
+    border-radius: 50%;
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 80px;
+    height: 80px;
+    background-color: #304FFE;
+    transition: all 0.3s ease-in-out;
+}
+
+.user-card .avatar i {
+    color: #82B1FF;
+    margin-top: -13px;
+    margin-left: -13px;
+    font-size: 106px !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.user-card .name {
+    color: rgba(0,0,0,0.87);
+    font-size: 16px;
+    line-height: 20px;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.user-card .nick {
+    color: rgba(0,0,0,0.54);
+    font-size: 14px;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+.user-card .nick.ng-enter {
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.3s;
+}
+.user-card .nick.ng-leave {
+    transition: all 0.3s ease-in-out;
+}
+.user-card .nick.ng-enter, .user-card .nick.ng-leave.ng-leave-active{
+    opacity:0;
+}
+.user-card .nick.ng-enter.ng-enter-active, .user-card .nick.ng-leave {
+    opacity:1;
+}
+
+.user-card .exp {
+    padding: 0 3px;
+    color: #FBC02D;
+}
+
+.user-card .secondary {
+    color: rgba(0,0,0,0.54);
+    font-size: 14px;
+}
+
+.user-card .skills {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: #FAFAFA;
+    margin-top: 8px;
+    margin-bottom: 68px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.user-card .skills.ng-enter {
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.3s;
+}
+.user-card .skills.ng-leave {
+    transition: all 0.3s ease-in-out;
+}
+.user-card .skills.ng-enter, .user-card .skills.ng-leave.ng-leave-active{
+    opacity:0;
+}
+.user-card .skills.ng-enter.ng-enter-active, .user-card .skills.ng-leave {
+    opacity:1;
+}
+
+.user-card .message {
+    width: 36px !important;
+    height: 36px !important;
+    opacity: 0;
+    margin: 0;
+    bottom: 16px;
+    left: 16px;
+    background-color: #eee;
+    position: absolute;
+    transition: all 0.3s linear;
+}
+
+.user-card .message i {
+    margin-top: -1px;
+    margin-left: -4px;
+}
+
+.user-card.expanded .message {
+    transition: all 0.3s linear;
+    transition-delay: 0.3s;
+    opacity: 1;
+}
+
+.user-card .subscribe {
+    color: #304FFE;
+    width: 100%;
+    margin: 0;
+    bottom: 8px;
+    position: absolute;
+    transition: all 0.3s linear;
+}
+
+.user-card.expanded .subscribe {
+    bottom: 16px;
+    width: auto;
+    right: 16px;
+    transition: all 0.3s linear;
+}
+
+.user-card.expanded {
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.user-card.expanded .avatar {
+    width: 180px;
+    height: 180px;
+}
+
+.user-card.expanded .avatar .empty {
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 160px;
+    height: 160px;
+}
+
+.user-card.expanded .avatar i {
+    margin-top: -26px;
+    margin-left: -26px;
+    font-size: 212px !important;
+}

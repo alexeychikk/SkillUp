@@ -1,0 +1,99 @@
+<md-dialog aria-label="createTaskDialog" flex ng-cloak style="overflow-x: hidden;">
+    <div style="top: 64px; bottom: 52px; width: 100%; position: absolute; background-color: rgba(255, 255, 255, .7); z-index: 100;"
+         layout="row" layout-align="center center" ng-if="!taskCreated">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Новое задание</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <i class="mdi mdi-close mdi-24"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content thin-scroll">
+        <form name="createTaskForm">
+            <md-input-container class="md-block" style="margin-top: 0;">
+                <label>Название задания</label>
+                <input ng-model="sendTask.title" name="taskTitle" md-maxlength="100" required minlength="10">
+                <div ng-messages="createTaskForm.taskTitle.$error">
+                    <div ng-message="minlength">Название должно содержать как минимум 10 символов</div>
+                </div>
+            </md-input-container>
+            <div layout="row" layout-align="end center">
+                <a href="https://guides.github.com/features/mastering-markdown" class="markdown-support" layout="row" layout-align="center center">
+                    <i class="mdi mdi-markdown mdi-24" style="margin-right: 5px;"></i>
+                    <span>Поддерживается синтаксис Markdown</span>
+                </a>
+                <md-button class="md-icon-button preview-button" ng-click="sendTask.preview = !sendTask.preview"
+                           aria-label="description-toolbar-menu">
+                    <i class="mdi mdi-eye mdi-24" ng-if="!sendTask.preview"></i>
+                    <md-tooltip ng-if="!sendTask.preview">Предпросмотр</md-tooltip>
+                    <i class="mdi mdi-pencil mdi-24" ng-if="sendTask.preview"></i>
+                    <md-tooltip ng-if="sendTask.preview">Редактор</md-tooltip>
+                </md-button>
+            </div>
+            <div ng-if="sendTask.preview" marked="sendTask.description || 'Вы ничего не ввели'"></div>
+            <md-input-container ng-if="!sendTask.preview" class="md-block" style="margin-top: 0;">
+                <label>Текст задания</label>
+                <textarea ng-model="sendTask.description" name="taskDescription" columns="1" required minlength="30"></textarea>
+                <div ng-messages="createTaskForm.taskDescription.$error">
+                    <div ng-message="minlength">Описание должно содержать как минимум 30 символов</div>
+                </div>
+            </md-input-container>
+            <div layout="row" layout-align="start start">
+                <div style="margin: 0 0 0 3px; color: rgba(0, 0, 0, 0.54);">Добавьте умения:</div>
+                <skup-skill-button ng-repeat="skill in sendTask.skills" id="skill.skill_id" type="skill"
+                              with-arrows count="skill.count" count-visible
+                              with-remove on-remove="removeSkill"></skup-skill-button>
+                <md-button class="md-accent md-mini expand-skill" ng-click="showSidenavSkills()" aria-label="showSidenav"
+                           style="margin-left: 8px;">
+                    <i class="mdi mdi-plus"></i>
+                </md-button>
+            </div>
+            <div layout="row" layout-align="start start" style="margin-top: 24px;">
+                <div style="margin-left: 3px; color: rgba(0, 0, 0, 0.54);">Ссылки на учебные материалы:</div>
+                <div layout="column" flex style="margin-left: 16px;">
+                    <div layout="row" layout-align="center center" flex ng-repeat="li in sendTask.links" ng-class="{'not-last': !$last}">
+                        <div flex><span ng-if="sendTask.links.length > 1" class="info-header">•</span>
+                            <a ng-href="{{li}}" target="_blank">{{li}}</a>
+                        </div>
+                        <md-button class="expand-button" style="margin-left: 10px;"
+                                   ng-click="removeLink($index)">
+                            <i class="mdi mdi-close mdi-secondary"></i>
+                            <md-tooltip>Удалить</md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+            <div layout="row" layout-align="start center">
+                <md-input-container flex>
+                    <label>Вставьте ссылку</label>
+                    <input type="text" name="taskLinks" ng-model="sendTask.link">
+                </md-input-container>
+                <md-button class="md-accent md-mini expand-skill" ng-click="addLink()" aria-label="showSidenav"
+                        style="margin-bottom: 14px;">
+                    <i class="mdi mdi-plus"></i>
+                </md-button>
+            </div>
+        </form>
+        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+            <md-toolbar class="md-theme-light">
+                <h1 class="md-toolbar-tools">Ваши умения</h1>
+            </md-toolbar>
+            <md-content layout="column" layout-align="start start" layout-padding>
+                <skup-skill-button ng-repeat="skill in user.completedSkills | orderBy: 'title'" id="skill.skill_id"
+                              type="skill" with-add ng-click="addSkill(skill)"></skup-skill-button>
+            </md-content>
+        </md-sidenav>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" style="padding-right: 24px; border-top: 1px solid rgba(0, 0, 0, .12);">
+        <md-button ng-click="cancel()" class="md-primary md-hue-3" style="color: #4285f4;">
+            Отмена
+        </md-button>
+        <md-button ng-click="createTask()" class="md-primary md-hue-3" style="color: #4285f4;">
+            Создать
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

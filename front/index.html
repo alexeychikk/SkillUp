@@ -1,0 +1,190 @@
+<!doctype html>
+<html ng-app="skillup">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>SkillUp</title>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css">
+
+    <link rel="stylesheet" href="/dist/main.min.css">
+
+    <link href="/dist/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="/bower_components/ngImgCrop/compile/minified/ng-img-crop.css">
+    <link href="/bower_components/mdi/css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="/bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="/bower_components/hammerjs/hammer.min.js"></script>
+    <script src="/bower_components/angular-material/angular-material.min.js"></script>
+    <script src="/bower_components/angular-highlightjs/angular-highlightjs.min.js"></script>
+    <script src="/bower_components/lodash/lodash.min.js"></script>
+    <script type="text/javascript" src="/bower_components/zxcvbn/dist/zxcvbn.js"></script>
+
+    <script src="https://code.angularjs.org/1.3.0-rc.2/i18n/angular-locale_ru-ru.js"></script>
+
+    <!--<script src="http://connect.facebook.net/en_US/all.js"></script>-->
+
+    <script src="/bower_components/ngImgCrop/compile/minified/ng-img-crop.js"></script>
+    <script src="/bower_components/marked/lib/marked.js"></script>
+    <script src="/bower_components/angular-marked/dist/angular-marked.js"></script>
+
+    <script src="/dist/main.min.js"></script>
+
+    <script type="text/javascript">
+        WebFontConfig = {
+            google: { families: [ 'Roboto:400,500,700:latin,cyrillic-ext,cyrillic' ] }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                    '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })(); </script>
+</head>
+
+<body layout="row" style="background-color: #F5F5F5;">
+<div layout="column" layout-fill tabindex="-1" role="main">
+    <div ng-controller="NavbarController">
+        <md-toolbar class="md-hue-2 md-whiteframe-z1 toolbar-main" style="z-index: 3;">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings" ng-if="isLoggedIn()" ng-click="toggleSidenav()">
+                    <i class="mdi mdi-menu mdi-24"></i>
+                </md-button>
+                <h2>
+                    <a href="/main" class="header-logo">skill<span style="color: #E91E63;">up</span></a>
+                </h2>
+                <md-divider class="vertical-divider" ng-if="isLoggedIn()"></md-divider>
+                <div ng-if="isLoggedIn()" class="page-title">
+                    {{pageTitle}}
+                </div>
+                <div flex="5"></div>
+                <div flex>
+                    <div flex layout="row" layout-align="center center" ng-if="isLoggedIn()"
+                         style="border-radius: 3px; background-color: rgba(255, 255, 255, .15); padding: 6px 0;">
+                        <i class="mdi mdi-magnify mdi-24" style="margin-left: 8px;"></i>
+                        <md-input-container md-no-float style="margin: 0 20px 0 0;" flex layout="row" layout-align="center center">
+                            <input type="text" placeholder="Поиск" class="search-main">
+                        </md-input-container>
+                    </div>
+                </div>
+                <div flex="5"></div>
+                <div style="padding-right: 30px;">
+                    <div ng-if="isLoggedIn()" flex layout="row" layout-align="end center">
+                        <md-button class="notifications-button" ng-click="openNotifications($event)" aria-label="notifications-btn">
+                            <md-tooltip>Уведомления</md-tooltip>
+                            <i class="mdi mdi-bell mdi-24"></i>
+                            <div class="notifications-triangle" ng-class="{'visible': notificationsShown}"></div>
+                            <div class="notifications-count-wrap">
+                            <div class="notifications-count" ng-bind="notifications.count" ng-show="notifications.count"></div>
+                            </div>
+                        </md-button>
+                        <a layout="row" layout-align="center center" ng-href="/users/{{loggedUser().id}}">
+                            <img ng-if="loggedUser().avatar" alt="{{loggedUser().nick}}" class="avatar" ng-src="/avatars/{{loggedUser().avatar}}"
+                                 ng-class="{admin: loggedUser().role !== 'пользователь'}"
+                                 onerror="angular.element(this).scope().loggedUser().avatar = null">
+                            <i class="mdi mdi-account-circle mdi-36" ng-if="!loggedUser().avatar"></i>
+                            <div layout="column" layout-align="center center">
+                                <h6 class="nickname" ng-class="{admin: loggedUser().role !== 'пользователь'}">{{loggedUser().nick}}</h6>
+                            <span class="user-exp">exp:
+                                <span style="color: #E91E63;">{{loggedUser().exp}}</span>
+                            </span>
+                            </div>
+                        </a>
+                        <a ng-if="loggedUser().role !== 'пользователь'" class="admin-panel" href="/admin" hide>
+                            <md-tooltip>Админпанель</md-tooltip>
+                            <i class="mdi mdi-account-star mdi-24" ng-class="{'navbar-active': getSelectedIndex() == -1}"></i>
+                        </a>
+                        <md-button class="md-mini logout-button" ng-click="logout()" aria-label="logout-btn">
+                            <md-tooltip>Выйти</md-tooltip>
+                            <i class="mdi mdi-exit-to-app mdi-24"></i>
+                        </md-button>
+                    </div>
+                    <div ng-if="!isLoggedIn()" flex layout="row" layout-align="end center">
+                        <md-button class="md-raised md-primary md-hue-1"
+                                   ng-href="/registration" aria-label="logout-btn">
+                            Регистрация
+                        </md-button>
+                        <md-button class="md-raised" style="color: rgba(0, 0, 0, 0.54); font-weight: 500;"
+                                   ng-click="showLoginDialog($event)" aria-label="logout-btn">
+                            Войти
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+            <md-tabs class="md-hue-2 navtabs-animation" id="navtabs" md-selected="navtabs.selected" ng-show="isLoggedIn() && navtabs.tabs.length">
+                <md-tab ng-repeat="tab in navtabs.tabs" label="{{tab}}" class="navtab"></md-tab>
+            </md-tabs>
+        </md-toolbar>
+        <div class="sidenav-main" layout="column" layout-align="space-between start" ng-if="isLoggedIn() && sidenavVisible">
+            <md-list>
+                <md-list-item>
+                    <a flex href="/main" layout="row" layout-align="start center"
+                       ng-class="{'selected-page': getSelectedPageNum() === 0}">
+                        <i class="mdi mdi-home mdi-24"></i>
+                        <span>Главная</span>
+                    </a>
+                </md-list-item>
+                <md-list-item>
+                    <a flex href="/skills" layout="row" layout-align="start center"
+                       ng-class="{'selected-page': getSelectedPageNum() === 1}">
+                        <i class="mdi mdi-source-fork mdi-24"></i>
+                        <span>Умения</span>
+                    </a>
+                </md-list-item>
+                <md-list-item>
+                    <a flex href="/tasks" layout="row" layout-align="start center"
+                       ng-class="{'selected-page': getSelectedPageNum() === 2}">
+                        <i class="mdi mdi-library-books mdi-24"></i>
+                        <span>Задания</span>
+                    </a>
+                </md-list-item>
+                <md-list-item>
+                    <a flex href="/users" layout="row" layout-align="start center"
+                       ng-class="{'selected-page': getSelectedPageNum() === 3}">
+                        <i class="mdi mdi-account-multiple mdi-24"></i>
+                        <span>Пользователи</span>
+                    </a>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item>
+                    <a flex ng-href="/users/{{loggedUser().id}}" layout="row" layout-align="start center"
+                       ng-class="{'selected-page': getSelectedPageNum() === 4}">
+                        <i class="mdi mdi-account-circle mdi-24"></i>
+                        <span>Профиль</span>
+                    </a>
+                </md-list-item>
+                <md-list-item>
+                    <a flex ng-click="logout()" layout="row" layout-align="start center">
+                        <i class="mdi mdi-exit-to-app mdi-24"></i>
+                        <span>Выйти</span>
+                    </a>
+                </md-list-item>
+            </md-list>
+            <footer>
+                <div layout="row" layout-align="start start" style="margin-bottom: 7px;">
+                    <a href="https://github.com/alexeychikk">Zinkevych Alexey</a>
+                    <a href="https://github.com/VintorezVS">Chernyshenko Sergey</a>
+                </div>
+                <span>© {{date.getFullYear()}} SkillUp, Inc.</span>
+            </footer>
+        </div>
+    </div>
+    <md-content skup-on-scroll-bottom="{event: 'indexPageScrolled', percent: 95}" ng-view md-scroll-y flex class="content-main"
+                ng-class="{'sidenav-margin': isLoggedIn() && sidenavVisible}">
+    </md-content>
+
+</div>
+
+</body>
+</html>

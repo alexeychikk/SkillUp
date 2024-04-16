@@ -1,0 +1,60 @@
+<div class="notification md-whiteframe-2dp" layout="row">
+    <div class="notification-avatar" layout="row" layout-align="start start">
+        <div class="notification-icon-wrap">
+            <i class="mdi mdi-24 notification-icon"></i>
+        </div>
+    </div>
+    <div class="notification-body" flex>
+        <div class="notification-header" layout="row" layout-align="start center">
+            <div class="notification-title" flex>{{notificationType.title}}</div>
+            <div class="notification-time">{{notification.date_created | date: 'hh:mm a'}}</div>
+        </div>
+        <div class="notification-text" ng-switch="notification.type">
+            <span ng-switch-when="your_task_solved">
+                <a class="notification-link" ng-href="/users/{{notification.other_user_id}}">{{notification.other_user_name}}</a>
+                решил Ваше задание
+                <a class="notification-link" ng-href="/tasks/{{notification.task_id}}">{{notification.task_title}}</a>.
+            </span>
+            <span ng-switch-when="your_solution_checked">
+                <a class="notification-link" ng-href="/users/{{notification.other_user_id}}">{{notification.other_user_name}}</a>
+                оценил Ваше решение к заданию
+                <a class="notification-link" ng-href="/tasks/{{notification.task_id}}">{{notification.task_title}}</a>
+                как {{notification.sm_checked_correct ? 'правильное' : 'неправильное'}}.
+            </span>
+            <span ng-switch-when="solution_checked">
+                <a class="notification-link" ng-href="/users/{{notification.other_user_id}}">{{notification.other_user_name}}</a>
+                проверил решение к заданию
+                <a class="notification-link" ng-href="/tasks/{{notification.task_id}}">{{notification.task_title}}</a>,
+                которое проверили Вы, и посчитал его {{notification.sm_checked_correct ? 'правильным' : 'неправильным'}}.
+            </span>
+            <span ng-switch-when="task_approved"></span>
+            <span ng-switch-when="your_task_approved"></span>
+            <span ng-switch-when="your_solution_checked_full"></span>
+            <span ng-switch-when="solution_checked_full"></span>
+            <span ng-switch-when="task_approved_full"></span>
+            <span ng-switch-when="your_task_approved_full"></span>
+            <span ng-switch-when="task_liked">
+                <a class="notification-link" ng-href="/users/{{notification.other_user_id}}">{{notification.other_user_name}}</a>
+                понравилось ваше задание
+                <a class="notification-link" ng-href="/tasks/{{notification.task_id}}">{{notification.task_title}}</a>.
+            </span>
+            <span ng-switch-when="solution_liked"></span>
+            <span ng-switch-when="task_commented"></span>
+            <span ng-switch-when="solution_commented"></span>
+            <span ng-switch-when="task_received"></span>
+            <span ng-switch-when="user_subscribed"></span>
+            <span ng-switch-when="skill_up"></span>
+            <span ng-switch-when="comment_liked"></span>
+            <span ng-switch-when="comment_replied"></span>
+            <span ng-switch-when="sub_skill_up"></span>
+            <span ng-switch-when="sub_task_created_full"></span>
+            <span ng-switch-when="sub_task_approved_full"></span>
+            <span ng-switch-when="sub_solution_checked_full"></span>
+            <span ng-switch-when="sub_task_solved_full"></span>
+            <span ng-switch-when="sub_task_created"></span>
+            <span ng-switch-when="sub_task_approved"></span>
+            <span ng-switch-when="sub_solution_checked"></span>
+            <span ng-switch-when="sub_task_solved"></span>
+        </div>
+    </div>
+</div>

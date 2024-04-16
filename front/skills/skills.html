@@ -1,0 +1,172 @@
+
+<script type="text/ng-template" id="skills-tree">
+    <div layout="row" id="{{skill.id}}">
+        <md-button class="md-mini md-primary expand-skill" ng-if="skill.children.length > 0"
+                   ng-click="expand(skill)" aria-label="expand-toogle">
+            <i class="mdi mdi-chevron-down rotate-base" ng-class="{'rotate-btn': skill.expanded}"></i>
+        </md-button>
+        <span ng-if="skill.children.length == 0" style="margin-left: 14px;">• </span>
+            <skup-skill-button skup-highlight-skill="{{highlightedSkillID}}"
+                          id="skill.id" type="{{getSkillType(skill)}}" count="skill.count"
+                          with-add="(!skill.need && skill.count < 1) || skill.count === undefined"
+                          on-add="addNeed" tooltip-add="Добавить в 'Хочу'"
+                          with-remove="skill.need" on-remove="removeNeed" tooltip-remove="Убрать из 'Хочу'">
+
+            </skup-skill-button></div>
+    <ul class="animate-if-skill" ng-if="skill.children && skill.expanded">
+        <li ng-repeat="skill in skill.children" ng-include="'skills-tree'">
+        </li>
+    </ul>
+</script>
+
+<div layout="row" layout-fill id="tree-container">
+    <div flex="{{sidenavVisible ? 10 : 15}}" flex-md="5" hide-sm class="content-main-side"></div>
+
+    <div class="md-whiteframe-z1" layout="column" flex>
+        <md-toolbar class="secondary-toolbar">
+            <div class="md-toolbar-tools">
+                <md-autocomplete
+                        md-no-cache="true"
+                        md-selected-item="query.selectedItem"
+                        md-search-text="query.searchText"
+                        md-items="skill in query.search(query.searchText)"
+                        md-selected-item-change="query.selectedItemChanged(skill)"
+                        md-item-text="skill.title"
+                        md-min-length="0"
+                        placeholder="Поиск навыков..." style="min-width: 40%">
+                    <md-item-template>
+                        <span md-highlight-text="query.searchText" md-highlight-flags="^i">{{skill.title}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        Не найдено совпадений для "{{query.searchText}}".
+                    </md-not-found>
+                </md-autocomplete>
+
+                <div flex></div>
+
+
+                <div id="secondary-toolbar-actions" layout="row" layout-align="end center" flex>
+                    <div layout="row" layout-align="end center" ng-if="currentSkill.id != exs.root.id && viewLike === 'graph'">
+                        <md-button aria-label="remove-skill" class="md-icon-button" ng-click="openDeletingDialog($event)">
+                            <i class="mdi mdi-delete mdi-24"></i>
+                        </md-button>
+                        <md-button aria-label="update-skill" class="md-icon-button" ng-click="openUpdatingDialog($event)">
+                            <i class="mdi mdi-pencil mdi-24"></i>
+                        </md-button>
+                        <md-divider class="vertical-divider"></md-divider>
+                    </div>
+                    <md-button class="toggle-expand-all-skills md-icon-button" ng-click="collapseTree()"
+                               ng-if="expandAll.visible" aria-label="skill-page-sort" ng-disabled="expandAll.disabled">
+                        <md-tooltip>Свернуть список</md-tooltip>
+                        <i class="mdi mdi-arrow-collapse mdi-24"></i>
+                    </md-button>
+                    <md-menu md-position-mode="target target"  md-offset="0 65" style="margin: unset;">
+                        <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" aria-label="skill-page-sort">
+                            <md-tooltip>Выделить умею/хочу</md-tooltip>
+                            <i md-menu-origin class="mdi mdi-checkbox-multiple-marked mdi-24"></i>
+                        </md-button>
+                        <md-menu-content layout-padding>
+                            <md-menu-item>
+                                <md-checkbox md-menu-align-target class="md-primary" ng-model="highlight.skills">
+                                    Умею
+                                </md-checkbox>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-checkbox class="md-accent" ng-model="highlight.needs">Хочу</md-checkbox>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    <md-button class="md-icon-button" ng-click="changeView()" aria-label="tree-or-graph">
+                        <md-tooltip>В виде {{viewLike === 'graph' ? 'дерева' : 'графа'}}</md-tooltip>
+                        <i class="mdi mdi-24"
+                           ng-class="{'mdi-view-list': viewLike === 'graph', 'mdi-view-grid': viewLike === 'tree'}"></i>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+
+        <div class="skills-container" layout="column" layout-align="center center"
+             ng-show="currentSkill && viewLike === 'graph'">
+            <div ng-if="currentSkill.parents" layout-padding>
+                <skup-skill-button ng-repeat="skill in currentSkill.parents" id="skill.id" type="{{getSkillType(skill)}}"
+                                   count="skill.count"
+                                   with-add="(!skill.need && skill.count < 1) ||
+                                   skill.count === undefined && skill != exs.root"
+                                   on-add="addNeed" tooltip-add="Добавить в 'Хочу'"
+                                   with-remove="skill.need" on-remove="removeNeed" tooltip-remove="Убрать из 'Хочу'"
+                                   ng-click="setToCurrent(skill)">
+                </skup-skill-button>
+            </div>
+            <div class="current">
+                <skup-skill-button id="currentSkill.id" type="{{getSkillType(currentSkill) || 'root'}}"
+                                   count="currentSkill.count"
+                                   with-add="(!currentSkill.need && currentSkill.count < 1) ||
+                                   currentSkill.count === undefined && currentSkill != exs.root"
+                                   on-add="addNeed" tooltip-add="Добавить в 'Хочу'"
+                                   with-remove="currentSkill.need" on-remove="removeNeed"
+                                   tooltip-remove="Убрать из 'Хочу'">
+                </skup-skill-button>
+            </div>
+            <div ng-if="currentSkill.children" layout-padding>
+                <skup-skill-button ng-repeat="skill in currentSkill.children" id="skill.id" type="{{getSkillType(skill)}}"
+                                   count="skill.count"
+                                   with-add="(!skill.need && skill.count < 1) || skill.count === undefined"
+                                   on-add="addNeed" tooltip-add="Добавить в 'Хочу'"
+                                   with-remove="skill.need" on-remove="removeNeed" tooltip-remove="Убрать из 'Хочу'"
+                                   ng-click="setToCurrent(skill)">
+                </skup-skill-button>
+            </div>
+        </div>
+
+        <div layout="column" flex class="skills-container" ng-show="viewLike === 'tree'">
+            <div class="animate-if-skill" flex>
+                <div class="exs-root" layout="row" id="exs.root.id">
+                    <md-button class="md-mini md-primary expand-skill"
+                               ng-click="expand(exs.root)" aria-label="expand-toogle">
+                        <i class="mdi mdi-chevron-down rotate-base" ng-class="{'rotate-btn': exs.root.expanded}"></i>
+                    </md-button>
+                    <skup-skill-button id="exs.root.id" type="root"></skup-skill-button>
+                </div>
+
+                <ul class="animate-if-skill" ng-if="exs.root.expanded" style="margin-left: 19px;">
+                    <li ng-repeat="skill in exs.root.children" ng-include="'skills-tree'">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div flex="{{sidenavVisible ? 10 : 15}}" flex-md="5" hide-sm class="content-main-side"></div>
+</div>
+
+<div class="floating-fab" layout="row" layout-align="center center"
+     ng-if="loggedUser.role != 'пользователь' && viewLike === 'tree'" ng-cloak>
+    <md-fab-speed-dial class="md-scale" md-open="isOpened" md-direction="up">
+        <md-fab-trigger>
+            <md-button aria-label="skills-menu" class="md-fab md-accent mdi-fab">
+                <i class="mdi mdi-menu mdi-24"></i>
+            </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+            <md-button aria-label="add-skill" class="md-fab md-raised md-mini mdi-fab"
+                       ng-click="openAddingDialog($event)">
+                <i class="mdi mdi-plus-circle mdi-24"></i>
+            </md-button>
+            <md-button aria-label="remove-skill" class="md-fab md-raised md-mini mdi-fab"
+                       ng-click="openDeletingDialog($event)">
+                <i class="mdi mdi-delete mdi-24"></i>
+            </md-button>
+            <md-button aria-label="update-skill" class="md-fab md-raised md-mini mdi-fab"
+                       ng-click="openUpdatingDialog($event)">
+                <i class="mdi mdi-pencil mdi-24"></i>
+            </md-button>
+        </md-fab-actions>
+    </md-fab-speed-dial>
+</div>
+
+<div class="floating-fab" layout="row" layout-align="center center"
+     ng-if="loggedUser.role != 'пользователь' && viewLike === 'graph'">
+    <md-button aria-label="add-skill" class="md-fab md-accent mdi-fab" ng-click="openAddingDialog($event)">
+        <i class="mdi mdi-plus mdi-24"></i>
+    </md-button>
+</div>

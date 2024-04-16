@@ -1,0 +1,23 @@
+{
+	"port": 80,
+	"knex": {
+		"client": "pg",
+		"connection": {
+			"host": "localhost",
+			"user": "skillupserv",
+			"password": "",
+			"database": "skillup"
+		}
+	},
+	"nodemailer": {
+		"service": "Gmail",
+		"auth": {
+			"user": "",
+			"pass": ""
+		}
+	},
+	"crypto-wrap": {
+		"algorithm": "aes-256-ctr",
+		"password": ""
+	}
+}

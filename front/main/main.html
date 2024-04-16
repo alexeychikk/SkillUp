@@ -1,0 +1,85 @@
+
+<div style="position: absolute; height: 92%; width: 100%;" id="toastError"></div>
+<div style="position: absolute; height: 50%; width: 50%; margin-left: calc(50% - 150px);" id="toastSuccess"></div>
+
+<div layout="row" ng-class="{'promo-area': !isLoggedIn()}">
+    <div flex="{{isLoggedIn() ? (sidenavVisible ? 15 : 20) : 10}}" flex-md="5" hide-sm class="content-main-side"></div>
+    <div ng-if="isLoggedIn()" flex layout="column"
+         style="margin-top: 30px; margin-bottom: 30px; z-index: 3;">
+        <div layout="row" layout-align="center center" ng-if="isProgressVisible()">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <ng-switch on="navtabs.selected">
+            <div role="tabpanel"
+                 aria-labelledby="tab1"
+                 ng-switch-when="0"
+                 md-swipe-left="next()"
+                 md-swipe-right="previous()">
+                <skup-tasks-list tasks="tasksReceived" exp-style="-" subheader="Полученные" receive-callback="receiveCallback"></skup-tasks-list>
+                <skup-tasks-list tasks="tasksRecommended" exp-style="-" subheader="Рекомендованные" receive-callback="receiveCallback"></skup-tasks-list>
+                <div ng-if="loaded.received && loaded.recommended && !tasksReceived.length && !tasksRecommended.length"
+                     layout="row" layout-align="center center"
+                     class="md-tile-content hint-title main-list-empty">Нет заданий для решения</div>
+            </div>
+            <div role="tabpanel"
+                 aria-labelledby="tab2"
+                 ng-switch-when="1"
+                 md-swipe-left="next()"
+                 md-swipe-right="previous()">
+                <skup-solutions-list solutions="solutionsForChecking" subheader="Рекомендованные" exp-style="+"></skup-solutions-list>
+                <div ng-if="loaded.check && !solutionsForChecking.length" layout="row" layout-align="center center"
+                     class="md-tile-content hint-title main-list-empty">Нет решений для проверки</div>
+            </div>
+            <div role="tabpanel"
+                 aria-labelledby="tab3"
+                 ng-switch-when="2"
+                 md-swipe-left="next()"
+                 md-swipe-right="previous()">
+                <skup-tasks-list tasks="tasksForApproving" show-difficulty="false" show-receive="false" subheader="Рекомендованные"
+                            solvable="false" approvable="true" exp-style="+"></skup-tasks-list>
+                <div ng-if="loaded.approve && !tasksForApproving.length" layout="row" layout-align="center center"
+                     class="md-tile-content hint-title main-list-empty">Нет заданий для подтверждения</div>
+            </div>
+        </ng-switch>
+    </div>
+    <div ng-if="!isLoggedIn()" flex layout="row">
+        <div layout="column" layout-align="center center" flex="60">
+            <h1 class="slogan-header">Прокачай свои навыки.</h1>
+            <h3 class="slogan-subheader">Решай задания, проверяй решения, знакомся с новыми людьми и получай профессиональные знания!</h3>
+        </div>
+        <div layout="column" flex="40" class="register-area">
+            <md-card>
+                <md-card-content>
+                    <div layout="column">
+                        <form>
+                            <md-input-container class="md-block">
+                                <label>Никнейм</label>
+                                <input ng-model="reg.nick">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>E-mail</label>
+                                <input ng-model="reg.email">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Пароль</label>
+                                <input type="password" ng-model="reg.password">
+                            </md-input-container>
+                        </form>
+                        <md-button class="md-raised md-primary md-hue-2 register-button"
+                                   ng-click="register()" aria-label="logout-btn">
+                            Зарегистрироваться
+                        </md-button>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+    <div flex="{{isLoggedIn() ? (sidenavVisible ? 15 : 20) : 10}}" flex-md="5" hide-sm class="content-main-side"></div>
+	
+	<md-button class="md-fab md-accent md-fab-bottom-right" style="position: fixed;"
+		   ng-click="showCreateTaskDialog($event)" ng-if="isLoggedIn() && user.completedSkills && user.completedSkills.length">
+		<md-tooltip>Создать задание</md-tooltip>
+		<div layout="row" layout-align="center center"><i class="mdi mdi-plus mdi-24"></i></div>
+	</md-button>
+</div>
+

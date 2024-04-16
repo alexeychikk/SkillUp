@@ -1,0 +1,150 @@
+<div layout="row" layout-fill>
+    <md-sidenav class="admin-sidenav md-sidenav-left md-whiteframe-z2 ng-isolate-scope" md-is-locked-open="true"
+                md-component-id="left" layout="column">
+
+        <header class="nav-header">
+            <a role="button" class="link" href="#" ng-click="statistic()">
+                <h1 class="admin-header md-heading">Админпанель</h1>
+            </a>
+        </header>
+
+        <md-divider></md-divider>
+
+        <md-content flex role="navigation">
+            <h4 id="db-name" layout="row" layout-margin layout-align="center center">{{database.name}}</h4>
+            <md-divider></md-divider>
+            <md-list class="sidenav-list">
+                    <span ng-repeat="table in database.tables">
+                        <md-list-item>
+                            <md-button class="sidenav-button" flex ng-click="expand(table)" aria-label="expand-table">
+                                <span>{{table.name}}</span>
+                                <i class="mdi mdi-chevron-down mdi-24 rotate-base"
+                                   ng-class="{'rotate-btn': table.expanded}"></i>
+                            </md-button>
+                        </md-list-item>
+                        <md-list class="animate-if" ng-if="table.expanded">
+                            <md-list-item class="column-item" ng-repeat="name in table.columnNames">
+                                <p>{{name}}</p>
+                                <md-button class="md-secondary" ng-click="columnInfo(table, name, $event)" aria-label="delete-column">
+                                    <i class="mdi mdi-information-outline mdi-24"></i>
+                                </md-button>
+                            </md-list-item>
+                        </md-list>
+                    </span>
+            </md-list>
+        </md-content>
+    </md-sidenav>
+
+    <div id="tables" layout="column" layout-align="center center">
+        <md-card ng-if="lastExpandedTable.expanded">
+            <md-card-header>
+                <div  layout="row" layout-align="space-between center" class="table-header"  ng-if="!selection.selected">
+                    <h2>{{tableName}}</h2>
+                    <span layout="row" layout-align="space-between center">
+                        <md-input-container class="header-input" md-no-float>
+                            <input type="search" ng-model="filter.query" placeholder="Поиск по {{filter.byColumnName}}">
+                        </md-input-container>
+
+                        <md-select class="db-table-select header-select" ng-model="filter.byColumnName" md-on-close="filter.resetQuery()">
+                            <md-select-label>{{filter.byColumnName}}</md-select-label>
+                            <md-option ng-repeat="name in lastExpandedTable.columnNames" value="{{name}}">
+                                {{name}}
+                            </md-option>
+                        </md-select>
+
+                        <md-button class="header-button" aria-label="table-menu">
+                            <i class="mdi mdi-dots-vertical mdi-24"></i>
+                        </md-button>
+                    </span>
+                </div>
+
+                <div  layout="row" layout-align="space-between center" class="table-header-modified" ng-if="selection.selected">
+                    <div>Выбрано строк: {{selection.count}}</div>
+                    <span>
+                        <md-button class="header-button" aria-label="table-remove">
+                            <i class="mdi mdi-delete mdi-24"></i>
+                        </md-button>
+                        <md-button class="header-button" aria-label="table-menu">
+                            <i class="mdi mdi-dots-vertical mdi-24"></i>
+                        </md-button>
+                    </span>
+                </div>
+            </md-card-header>
+            <md-card-content>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="cell-for-padding"></th>
+                            <th class="table-checkbox-container">
+                                <md-checkbox class="table-checkbox no-ink-ripple" ng-model="selection.allSelected"
+                                             ng-click="selectAllRows(lastExpandedTable)"
+                                             aria-label="select-all-rows">
+                                </md-checkbox>
+                            </th>
+                            <th ng-repeat="name in lastExpandedTable.columnNames" ng-click="sortColumn(lastExpandedTable, name)">
+                                <i class="mdi mdi-arrow-up mdi-24 sort-icon rotate-base"
+                                   ng-class="{'sort-icon': !lastExpandedTable.columnClicked[name],
+                                            'sorted-column-icon-color': lastExpandedTable.columnClicked[name] === 1 ||
+                                            lastExpandedTable.columnClicked[name] === -1,
+                                            'rotate-btn': lastExpandedTable.columnClicked[name] === 1}">
+                                </i>
+                                <span ng-class="{'sorted-column-text': lastExpandedTable.columnClicked[name] === 1 ||
+                                                lastExpandedTable.columnClicked[name] === -1}">{{name}}
+                                </span>
+                            </th>
+                            <th class="cell-for-padding"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in rowsOnPage"
+                            ng-class="{'selected-row': selection.indexes[row['id']] === true}">
+                            <td class="cell-for-padding"></td>
+                            <td class="table-checkbox-container">
+                                <md-checkbox class="table-checkbox" ng-model="selection.indexes[row['id']]" aria-label="select-row"></md-checkbox>
+                            </td>
+                            <td ng-repeat="name in lastExpandedTable.columnNames">
+                                <div ng-if="name === 'avatar'">
+                                    <img class="table-img" ng-if="row[name]" alt="avatar" ng-src="/avatars/{{row[name]}}">
+                                    <i class="mdi mdi-account-circle mdi-36" ng-if="!row[name]"></i>
+                                </div>
+                                <div ng-if="lastExpandedTable.columns[name].type === 'date'">{{row[name] | date: 'dd/M/yyyy'}}</div>
+                                <div ng-if="name !== 'avatar' && lastExpandedTable.columns[name].type !== 'date'">{{row[name] || 'null'}}</div>
+                            </td>
+                            <td class="cell-for-padding"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-card-content>
+            <md-card-footer layout="row" layout-align="end center">
+                <span>Строк на странице: </span>
+                <md-select class="db-table-select" ng-model="footer.rowsPerPage">
+                    <md-select-label>{{lastExpandedTable.rowsPerPage}}</md-select-label>
+                    <md-option value="{{lastExpandedTable.rowsCount}}" ng-if="lastExpandedTable.rowsCount < rowsOnScreen">
+                        {{lastExpandedTable.rowsCount}}
+                    </md-option>
+                    <md-option value="{{rowsOnScreen}}" ng-if="lastExpandedTable.rowsCount >= rowsOnScreen">{{rowsOnScreen}}</md-option>
+                    <md-option value="10" ng-if="lastExpandedTable.rowsCount >= 10">10</md-option>
+                    <md-option value="20" ng-if="lastExpandedTable.rowsCount >= 20">20</md-option>
+                    <md-option value="50" ng-if="lastExpandedTable.rowsCount >= 50">50</md-option>
+                    <md-option value="100" ng-if="lastExpandedTable.rowsCount >= 100">100</md-option>
+                </md-select>
+                <span class="counter">
+                    {{pageNumber * lastExpandedTable.rowsPerPage + 1}}
+                    -
+                    {{(pageNumber + 1) * lastExpandedTable.rowsPerPage > lastExpandedTable.rowsCount ? lastExpandedTable.rowsCount : (pageNumber + 1) * lastExpandedTable.rowsPerPage}}
+                    из {{lastExpandedTable.rowsCount}}
+                </span>
+                <span>
+                    <md-button class="header-button" ng-click="leftPage()" ng-disabled="pageNumber === 0" aria-label="page-left">
+                        <i class="mdi mdi-chevron-left mdi-24"></i>
+                    </md-button>
+                    <md-button class="header-button" ng-click="rightPage()"
+                               ng-disabled="(pageNumber + 1) * lastExpandedTable.rowsPerPage >= lastExpandedTable.rowsCount"
+                               aria-label="page-right">
+                        <i class="mdi mdi-chevron-right mdi-24"></i>
+                    </md-button>
+                </span>
+            </md-card-footer>
+        </md-card>
+    </div>
+</div>

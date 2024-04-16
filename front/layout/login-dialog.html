@@ -1,0 +1,58 @@
+
+<md-dialog aria-label="Вход на сайт" style="width: 25%;">
+    <form name="logForm">
+        <md-toolbar style="background-color: #E8EAF6; font-weight: 500; color: rgba(0, 0, 0, 0.54);">
+            <div class="md-toolbar-tools" layout="row" layout-align="center center">
+                <span flex>Вход на сайт</span>
+                <md-button href="/auth/facebook" target="_self" class="md-raised md-primary login-social-btn" aria-label="social-login-facebook">
+                    <md-tooltip>Войти через Facebook</md-tooltip>
+                    <div layout="row" layout-align="center center" flex>
+                        <img src="/dist/images/ic_facebook.png">
+                    </div>
+                </md-button>
+                <md-button href="/auth/facebook" target="_self" class="md-raised md-primary login-social-btn" aria-label="social-login-vkontakte">
+                    <md-tooltip>Войти через ВКонтакте</md-tooltip>
+                    <div layout="row" layout-align="center center" flex>
+                        <img src="/dist/images/ic_vkontakte.png">
+                    </div>
+                </md-button>
+                <md-button href="/auth/facebook" target="_self" class="md-raised md-primary login-social-btn" aria-label="social-login-google">
+                    <md-tooltip>Войти через Google+</md-tooltip>
+                    <div layout="row" layout-align="center center" flex>
+                        <img src="/dist/images/ic_google.png">
+                    </div>
+                </md-button>
+                <md-button href="/auth/facebook" target="_self" class="md-raised md-primary login-social-btn" aria-label="social-login-github">
+                    <md-tooltip>Войти через GitHub</md-tooltip>
+                    <div layout="row" layout-align="center center" flex>
+                        <img src="/dist/images/ic_github.png">
+                    </div>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="sticky-container">
+            <div class="md-dialog-content" style="padding-bottom: 0; position: relative;">
+                <md-input-container class="md-block">
+                    <label>E-mail</label>
+                    <input ng-model="log.email" name="emailN" required>
+                    <div ng-messages="getLoginErr()">
+                        <div ng-message="loginerr">Неправильный email или пароль</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" style="margin-bottom: 0;">
+                    <label>Пароль</label>
+                    <input ng-model="log.password" name="passwordN" type="password" required>
+                </md-input-container>
+                <a href="/restore" style="font-size: small; margin-left: 2px; position: absolute; bottom: 0; margin-bottom: 8px 0;">Забыли пароль?</a>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-click="answer()" class="md-primary" md-autofocus>
+                Войти
+            </md-button>
+            <md-button ng-click="cancel()" class="md-primary">
+                Отмена
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

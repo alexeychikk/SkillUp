@@ -1,0 +1,237 @@
+/* all.html */
+
+.all-tasks-sortable-column {
+    padding-top: 9px !important;
+    outline: none;
+    cursor: pointer;
+}
+
+.all-tasks-header-cell {
+    display: table-cell;
+    color: rgba(0, 0, 0, .54);
+    padding-top: 16px;
+    margin-right: 16px;
+    white-space: nowrap;
+    height: inherit;
+}
+
+.all-tasks-exp-container {
+    display: inline;
+    width: auto;
+    float: right;
+}
+
+.all-tasks-sortable-column.all-tasks-header-cell:hover {
+    color: rgba(0, 0, 0, .87);
+}
+
+.all-tasks-sortable-column.all-tasks-header-cell:hover .sort-icon {
+    color: rgba(0, 0, 0, .26);
+}
+
+.all-tasks-header-cell .sort-icon {
+    color: #F5F5F5;
+}
+
+.all-tasks-header-cell-text {
+    text-align: left;
+    font-weight: normal !important;
+    font-size: 15px;
+}
+
+.all-tasks-body-cell {
+    display: table-cell;
+    margin-right: 16px;
+}
+
+#all-tasks-virtual-container {
+    height: calc(100vh - 113px);
+    background-color: white;
+}
+
+.all-tasks-virtual-item-container {
+    height: auto;
+    border-bottom: solid 1px #EEEEEE;
+}
+
+.all-tasks-virtual-item {
+    padding-right: 16px;
+    cursor: pointer;
+}
+
+.not-approved-task-background {
+    background-color: #FAFAFA;
+}
+
+.all-tasks-virtual-item-clickable-aria {
+    height: 48px;
+    outline: none;
+}
+
+.all-tasks-virtual-item-container:hover {
+    background-color: #EEEEEE;
+}
+
+.all-tasks-skills-container {
+    margin-left: 38px;
+    height: auto;
+    opacity: 1;
+    transition: all ease-in-out .5s;
+}
+
+.all-tasks-skills-container.ng-enter,
+.all-tasks-skills-container.ng-leave.ng-leave-active {
+    height: 0;
+    opacity: 0;
+}
+
+.all-tasks-skills-container.ng-leave,
+.all-tasks-skills-container.ng-enter.ng-enter-active {
+    height: 24px;
+    overflow: hidden;
+    opacity: 1;
+}
+
+/* one.html */
+
+.one-task-sidenav {
+    background-color: white;
+    height: calc(100vh - 64px);
+}
+
+.one-task-sidenav .background{
+    height: 140px;
+    width: 100%;
+    background: linear-gradient(#1A237E, #3F51B5);
+}
+
+.one-task-sidenav-content-conteiner {
+    overflow: auto;
+    padding: 0 16px;
+}
+
+.one-task-sidenav-content {
+    max-width: 100%;
+}
+
+.author-container {
+    margin: -24px 16px 0 16px;
+}
+
+.author-avatar-container {
+    width: 48px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.author-avatar-container a {
+    width: auto;
+    color: rgba(0, 0, 0, .54);
+}
+
+.author-avatar {
+    height: 48px;
+    width: 48px;
+    border: #fff 1px solid;
+    border-radius: 50%;
+}
+
+.author-name-container {
+    margin-top: 8px;
+    margin-bottom: 36px;
+}
+
+.author-name {
+    text-decoration: none;
+    outline: none;
+    color: rgba(0, 0, 0, .87);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.one-task-sidenav-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    margin-bottom: 14px;
+}
+
+.one-task-sidenav-text h2 {
+    display: inline;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 36px;
+    max-height: 105px;
+}
+
+.one-task-sidenav-text h4 {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 14px 0 0 0;
+}
+
+.one-task-sidenav-text a {
+    display: block;
+    text-decoration: none;
+    outline: none;
+    color: rgb(63,81,181);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 4px 0 0 0;
+}
+
+.one-task-sidenav-text h6 {
+    display: inline;
+    color: rgba(0, 0, 0, .54);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.one-task-sidenav-action {
+    border-top: solid 1px rgba(0, 0, 0, .12);
+    padding: 4px 16px;
+    width: 100%;
+}
+
+.one-task-frames {
+    margin-top: 24px;
+}
+
+.md-icon-button.one-task-frames-action {
+    color: rgba(0, 0, 0, .54) !important;
+}
+
+.md-icon-button.one-task-frames-action:hover {
+    color: rgba(0, 0, 0, .87) !important;
+}
+
+.markdown-support {
+    text-decoration: none;
+    outline: none;
+    color: rgba(0, 0, 0, .87);
+}
+
+.markdown-support .mdi {
+    color: rgba(0, 0, 0, .54);
+}
+
+
+.markdown-support:hover .mdi {
+    color: rgb(63,81,181);
+}
+
+.markdown-support:hover {
+    color: rgb(63,81,181);
+}
+
+.markdown-support span {
+    font-size: 12px;
+}
+
+.one-task-card-action {
+    margin: 0;
+}

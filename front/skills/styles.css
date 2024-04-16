@@ -1,0 +1,145 @@
+/* skills.html */
+
+.animate-if-skill.ng-enter, .animate-if-skill.ng-leave {
+    -webkit-transition:all cubic-bezier(.250, .460, .450, .940) .5s;
+    transition:all cubic-bezier(.250, .460, .450, .940) .5s;
+}
+
+.animate-if-skill.ng-enter,
+.animate-if-skill.ng-leave.ng-leave-active {
+    height: auto;
+    max-height: 0;
+    opacity:0;
+}
+
+.animate-if-skill.ng-leave,
+.animate-if-skill.ng-enter.ng-enter-active {
+    display: block !important;
+    max-height: 1000px;
+    overflow: hidden;
+    opacity:1;
+}
+
+.exs-root {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.search-skills {
+    margin-left: 20px;
+}
+
+.select {
+    margin-left: 5%
+}
+
+.button-skill {
+    margin-left: 25px;
+}
+
+h4 {
+    color: rgba(0, 0, 0, .54);
+}
+
+.toogle-expand-all-skills[disabled] {
+    color: rgba(255, 255, 255, .30) !important;
+}
+
+.toggle-expand-all-skills.ng-enter,
+.toggle-expand-all-skills.ng-leave {
+    transition:all ease-in-out .3s;
+}
+
+.toggle-expand-all-skills.ng-enter,
+.toggle-expand-all-skills.ng-leave.ng-leave-active {
+    opacity:0;
+}
+
+.toggle-expand-all-skills.ng-leave,
+.toggle-expand-all-skills.ng-enter.ng-enter-active {
+    opacity:1;
+}
+
+.highlighted-skill-animation {
+    transition: background-color ease-out .7s;
+}
+
+.highlighted-skill {
+    background-color: #FFEB3B !important;
+}
+
+
+.secondary-toolbar {
+    z-index: 3;
+}
+
+#secondary-toolbar-actions {
+    opacity: 0;
+    transition: opacity ease-in-out .3s;
+}
+
+#secondary-toolbar-actions .vertical-divider {
+    border-color: #AAAAAA;
+    margin: 0 16px;
+    height: 30px;
+}
+
+#tree-container {
+    margin-top: 30px;
+}
+
+.md-virtual-repeat-container.md-autocomplete-suggestions-container {
+    height: 226px !important;
+}
+
+.skills-container {
+    background-color: #fff;
+    min-height: calc(100vh - 200px);
+}
+
+ul {
+    margin-top: 0;
+    list-style-type: none;
+    padding-left: 25px;
+}
+
+.expand-skill {
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    min-height: 0;
+    line-height: normal;
+    width: 19px;
+    height: 19px;
+}
+
+.expand-skill md-icon {
+    width: 19px;
+    height: 19px;
+}
+
+.mdi-fab {
+    padding: 5px;
+    color: rgba(0, 0, 0, .54) !important;
+}
+
+.md-accent.mdi-fab {
+    color: white !important;
+}
+
+.floating-fab {
+    position: fixed;
+    right: 30px;
+    bottom: 35px;
+    z-index: 101;
+}
+
+.adding-skills-chips .md-input {
+    width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.adding-skills-chips .md-chips {
+    margin-top: 16px;
+}

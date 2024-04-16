@@ -1,0 +1,36 @@
+{
+  "name": "skillup",
+  "version": "0.0.1",
+  "homepage": "https://github.com/alexeychikk/SkillUp",
+  "authors": [
+    "UU IKT Developers Club"
+  ],
+  "keywords": [
+    "skills"
+  ],
+  "license": "NO",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.4.8",
+    "angular-route": "^1.4.8",
+    "angular-animate": "^1.4.8",
+    "angular-aria": "^1.4.8",
+    "angular-material": "1.0.1",
+    "angular-messages": "^1.4.8",
+    "angular-highlightjs": "^0.5.1",
+    "lodash": "^3.10.1",
+    "hammerjs": "^2.0.6",
+    "angular-cookies": "^1.4.8",
+    "ngImgCrop": "^0.3.2",
+    "mdi": "^1.4.57",
+    "zxcvbn": "^4.2.0",
+    "angular-marked": "~1.0.1"
+  }
+}

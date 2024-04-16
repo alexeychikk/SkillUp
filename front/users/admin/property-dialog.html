@@ -1,0 +1,13 @@
+<md-dialog aria-label="List dialog">
+    <header style="background-color: rgb(63,81,181); color: white;">
+        <h3 layout-margin>Свойства {{title}}</h3>
+    </header>
+    <md-dialog-content>
+        <pre>{{text}}</pre>
+    </md-dialog-content>
+    <div class="md-actions">
+        <md-button ng-click="ok()" class="md-primary">
+            OK
+        </md-button>
+    </div>
+</md-dialog>

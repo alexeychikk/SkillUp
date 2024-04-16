@@ -1,0 +1,9 @@
+<md-button class="task-button" ng-click="like()" ng-disabled="disabled" ng-mouseenter="me = true"
+           ng-class="{'md-accent': liked, 'focused': me && !liked}" ng-mouseleave="me = false">
+    <div layout="row" layout-align="center center" class="content">
+        <i class="mdi mdi-thumb-up" ng-style="s1"
+           ng-class="{'mdi-hint': !liked, 'mdi-36': size == 36, 'mdi-24': size == 24, 'mdi-18': size == 18}"></i>
+        <div style="margin: 4px 0 0 6px;">{{likes || 0}}</div>
+    </div>
+    <md-tooltip>Мне нравится</md-tooltip>
+</md-button>

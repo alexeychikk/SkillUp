@@ -1,0 +1,15 @@
+<md-dialog aria-label="addInfo" ng-cloak>
+    <md-dialog-content class="md-dialog-content">
+        <h2 class="md-title">Добавить сведения</h2>
+        <div class="md-dialog-content-body" layout="column" layout-align="start start">
+            <md-button ng-repeat="but in buttons" ng-click="answer(but.answer)"
+                       style="margin-left: 0; text-transform: none; font-size: 16px;">
+                <span style="float: left;">{{but.name}}</span></md-button>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button ng-click="answer()" class="md-primary md-hue-3" style="color: #4285f4;">
+            Отмена
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

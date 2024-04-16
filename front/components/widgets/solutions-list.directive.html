@@ -1,0 +1,115 @@
+<md-content ng-if="solutions.length" class="md-whiteframe-z1">
+    <section ng-if="subheader">
+        <md-divider></md-divider>
+        <md-subheader class="md-primary">{{subheader}}</md-subheader>
+        <md-divider></md-divider>
+    </section>
+    <md-list layout="column">
+        <md-list-item class="item-animate" ng-repeat="solution in solutions" style="padding: 0 32px 0 16px;">
+            <div layout="column" flex>
+                <div layout="row" layout-align="start center" class="task-header">
+                    <h3 flex class="task-title"><a href="tasks/{{solution.task_id}}">{{solution.task_title}}</a></h3>
+
+                    <p ng-if="showExp" class="task-exp">exp:
+                        <span ng-if="expStyle === undefined">{{solution.task_exp || 0 | thousand}}</span>
+                        <span ng-if="expStyle === '+'" style="color: #4CAF50;">+{{solution.task_exp || 0 | thousand}}</span>
+                        <span ng-if="expStyle === '-'" style="color: #F44336;">-{{solution.task_exp || 0 | thousand}}</span>
+                    </p>
+                </div>
+                <div layout="row" class="task-body">
+                    <div layout="row" flex>
+                        <span class="task-skills-word" style="margin-right: 5px;">Умения: </span>
+                        <div layout="row" layout-wrap flex>
+                            <skup-skill-button ng-repeat="skill in solution.skills" id="skill.skill_id" type="skill" count="skill.count"></skup-skill-button>
+                        </div>
+                    </div>
+                    <md-button class="md-mini md-primary expand-button" layout="row" layout-align="start start" ng-if="showExpand"
+                               ng-click="expand(solution)" aria-label="expand-toogle">
+                        <i class="mdi mdi-chevron-down mdi-24 rotate-base" ng-class="{'rotate-btn': solution.expanded}"></i>
+                    </md-button>
+                </div>
+                <div class="animate-if" layout="column" ng-if="solution.expanded">
+                    <md-card class="task-description-card">
+                        <md-card-content>
+                            <h2 class="md-title task-description-word">Условие</h2>
+                            <div class="task-description" marked="solution.task_description"></div>
+                        </md-card-content>
+                    </md-card>
+                    <md-card class="task-description-card">
+                        <md-card-content>
+                            <h2 class="md-title task-description-word"
+                                ng-class="{'checked-correct': solution.isCorrect, 'checked-incorrect': solution.isCorrect === false}">Решение</h2>
+                            <div class="task-description" marked="solution.content"></div>
+                            <div layout="row" layout-align="end center" flex style="margin-top: 10px;">
+                                <div ng-if="solution.isCorrect" layout="row" layout-align="start center" flex>
+                                    <span style="margin-right: 3%; font-size: 14px; color: rgba(0,0,0,0.54);">Оцените качество решения: </span>
+                                    <div layout="row" ng-mouseleave="mouseLeaveStar()">
+                                    <md-button class="task-button star-button" ng-mouseenter="mouseEnterStar(1)" aria-label="star"
+                                               ng-mouseleave="mouseLeaveStar(1)" ng-click="star(1)" md-no-ink>
+                                        <i ng-if="!stars.s1" class="mdi mdi-star-outline mdi-24"></i>
+                                        <i ng-if="stars.s1" class="mdi mdi-star mdi-24" ng-class="{star: starsFixed && stars.s1}"></i>
+                                    </md-button>
+                                    <md-button class="task-button star-button" ng-mouseenter="mouseEnterStar(2)" aria-label="star"
+                                               ng-mouseleave="mouseLeaveStar(2)" ng-click="star(2)" md-no-ink>
+                                        <i ng-if="!stars.s2" class="mdi mdi-star-outline mdi-24"></i>
+                                        <i ng-if="stars.s2" class="mdi mdi-star mdi-24" ng-class="{star: starsFixed && stars.s2}"></i>
+                                    </md-button>
+                                    <md-button class="task-button star-button" ng-mouseenter="mouseEnterStar(3)" aria-label="star"
+                                               ng-mouseleave="mouseLeaveStar(3)" ng-click="star(3)" md-no-ink>
+                                        <i ng-if="!stars.s3" class="mdi mdi-star-outline mdi-24"></i>
+                                        <i ng-if="stars.s3" class="mdi mdi-star mdi-24" ng-class="{star: starsFixed && stars.s3}"></i>
+                                    </md-button>
+                                    <md-button class="task-button star-button" ng-mouseenter="mouseEnterStar(4)" aria-label="star"
+                                               ng-mouseleave="mouseLeaveStar(4)" ng-click="star(4)" md-no-ink>
+                                        <i ng-if="!stars.s4" class="mdi mdi-star-outline mdi-24"></i>
+                                        <i ng-if="stars.s4" class="mdi mdi-star mdi-24" ng-class="{star: starsFixed && stars.s4}"></i>
+                                    </md-button>
+                                    <md-button class="task-button star-button" ng-mouseenter="mouseEnterStar(5)" aria-label="star"
+                                               ng-mouseleave="mouseLeaveStar(5)" ng-click="star(5)" md-no-ink>
+                                        <i ng-if="!stars.s5" class="mdi mdi-star-outline mdi-24"></i>
+                                        <i ng-if="stars.s5" class="mdi mdi-star mdi-24" ng-class="{star: starsFixed && stars.s5}"></i>
+                                    </md-button>
+                                    </div>
+                                </div>
+
+                                <skup-like-button type="solution" id="solution.id" likes="solution.likes" liked="solution.liked"
+                                             style="margin-right: 25px;"></skup-like-button>
+
+                                <div layout="row" layout-align="start center" ng-if="showCheck">
+                                    <md-button class="task-button" style="margin-right: 25px;" ng-click="check(solution, true)"
+                                               aria-label="correct" ng-mouseenter="me1 = true" ng-mouseleave="me1 = false"
+                                               ng-class="{'focused': me1 && !solution.isCorrect}">
+                                        <div layout="row" layout-align="center center" class="content">
+                                            <i class="mdi mdi-check mdi-24"
+                                               ng-class="{'checked-correct': solution.isCorrect, 'mdi-hint': !solution.isCorrect && !me1}"></i>
+                                            <md-tooltip>Правильно</md-tooltip>
+                                        </div>
+                                    </md-button>
+                                    <md-button class="task-button" style="margin-right: 25px;" ng-click="check(solution, false)"
+                                               aria-label="incorrect" ng-mouseenter="me2 = true" ng-mouseleave="me2 = false"
+                                               ng-class="{'focused': me2 && solution.isCorrect !== false}">
+                                        <div layout="row" layout-align="center center" class="content">
+                                            <i class="mdi mdi-close mdi-24"
+                                               ng-class="{'checked-incorrect': solution.isCorrect === false, 'mdi-hint': solution.isCorrect !== false && !me2}"></i>
+                                            <md-tooltip>Неправильно</md-tooltip>
+                                        </div>
+                                    </md-button>
+                                </div>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+                <div layout="row" layout-align="start center" class="task-footer" ng-class="{'task-padding': $last}">
+                    <div flex>
+                        <span class="task-date">Дата решения: {{solution.date_created | date: 'dd.MM.yyyy'}}</span>
+                        <span class="task-author">Решил: <a href="/users/{{solution.user_id}}">
+                            {{solution.user_name}}</a></span>
+                    </div>
+                    <md-button ng-if="solution.expanded" class="md-raised md-primary" style="margin-right: 0;"
+                               ng-click="send(solution)">Отправить</md-button>
+                </div>
+            </div>
+            <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+    </md-list>
+</md-content>

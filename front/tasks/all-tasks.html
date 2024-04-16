@@ -1,0 +1,126 @@
+<div layout="row">
+    <div flex="{{sidenavVisible ? 10 : 15}}" flex-md="5" hide-sm class="content-main-side"></div>
+
+    <div  class="md-whiteframe-z1" layout="column" flex>
+        <!--Запилить в расширеннный поиск-->
+        <!--<div class="md-whiteframe-z2" flex="20" style="padding: 16px; z-index: 1; background-color: #FAFAFA;">-->
+            <!--<md-chips ng-model="chips.selectedTasks" md-autocomplete-snap md-require-match>-->
+                <!--<md-autocomplete-->
+                        <!--md-selected-item="chips.selectedTask"-->
+                        <!--md-search-text="chips.searchTextTasks"-->
+                        <!--md-items="task in chips.tasksQuerySearch(chips.searchTextTasks)"-->
+                        <!--md-item-text="task"-->
+                        <!--placeholder="Поиск по названию">-->
+                    <!--<span md-highlight-text="chips.searchTextTasks">{{task}}</span>-->
+                <!--</md-autocomplete>-->
+            <!--</md-chips>-->
+
+            <!--<md-chips ng-model="chips.selectedSkills" md-autocomplete-snap md-require-match>-->
+                <!--<md-autocomplete-->
+                        <!--md-selected-item="chips.selectedSkill"-->
+                        <!--md-search-text="chips.searchTextSkills"-->
+                        <!--md-items="skill in chips.skillsQuerySearch(chips.searchTextSkills)"-->
+                        <!--md-item-text="skill"-->
+                        <!--placeholder="Поиск по умениям">-->
+                    <!--<span md-highlight-text="chips.searchTextSkills">{{skill}}</span>-->
+                <!--</md-autocomplete>-->
+            <!--</md-chips>-->
+
+            <!--<md-chips ng-model="chips.selectedAuthors" md-autocomplete-snap md-require-match>-->
+                <!--<md-autocomplete-->
+                        <!--md-selected-item="chips.selectedAuthor"-->
+                        <!--md-search-text="chips.searchTextAuthors"-->
+                        <!--md-items="author in chips.authorsQuerySearch(chips.searchTextAuthors)"-->
+                        <!--md-item-text="author"-->
+                        <!--placeholder="Поиск по автору">-->
+                    <!--<span md-highlight-text="chips.searchTextAuthors">{{author}}</span>-->
+                <!--</md-autocomplete>-->
+            <!--</md-chips>-->
+        <!--</div>-->
+
+        <div flex>
+            <div layout="row" layout-align="start center" style="height: 48px; padding-right: 33px;" flex="95">
+                <div flex="5">
+                </div>
+                <div class="all-tasks-header-cell all-tasks-sortable-column" layout="row" layout-align="start center" flex="45"
+                     ng-click="sortColumn('title')">
+                    <span class="all-tasks-header-cell-text"
+                         ng-class="{'sorted-column-text': columnSort['title'] == 'asc' || columnSort['title'] == 'desc'}">Название</span>
+                    <i class="mdi mdi-arrow-up mdi-24 rotate-base"
+                       ng-class="{'sort-icon': columnSort['title'] === undefined,
+                                  'sorted-column-icon-color': columnSort['title'] == 'asc' || columnSort['title'] == 'desc',
+                                  'rotate-btn': columnSort['title'] == 'desc'}">
+                    </i>
+                </div>
+                <div class="all-tasks-header-cell" layout="row" layout-align="start center" flex="25">
+                    <span class="all-tasks-header-cell-text">Автор</span>
+                </div>
+                <div class="all-tasks-header-cell all-tasks-sortable-column" layout="row" layout-align="start center" flex="15"
+                     ng-click="sortColumn('date_created')">
+                    <span class="all-tasks-header-cell-text"
+                         ng-class="{'sorted-column-text': columnSort['date_created'] == 'asc' || columnSort['date_created'] == 'desc'}">Дата создания</span>
+                    <i class="mdi mdi-arrow-up mdi-24 rotate-base"
+                       ng-class="{'sort-icon': columnSort['date_created'] === undefined,
+                                  'sorted-column-icon-color': columnSort['date_created'] == 'asc' || columnSort['date_created'] == 'desc',
+                                  'rotate-btn': columnSort['date_created'] == 'desc'}">
+                    </i>
+                </div>
+                <div class="all-tasks-header-cell all-tasks-sortable-column" layout="row" layout-align="start center" flex="10"
+                     ng-click="sortColumn('exp')">
+                    <div class="all-tasks-exp-container" layout="row">
+                        <span class="all-tasks-header-cell-text"
+                             ng-class="{'sorted-column-text': columnSort['exp'] == 'asc' || columnSort['exp'] == 'desc'}">Exp</span>
+                        <i class="mdi mdi-arrow-up mdi-24 rotate-base"
+                           ng-class="{'sort-icon': columnSort['exp'] === undefined,
+                                      'sorted-column-icon-color': columnSort['exp'] == 'asc' || columnSort['exp'] == 'desc',
+                                      'rotate-btn': columnSort['exp'] == 'desc'}">
+                        </i>
+                    </div>
+                </div>
+            </div>
+            <div flex="5"></div>
+        </div>
+        <md-divider></md-divider>
+        <md-virtual-repeat-container id="all-tasks-virtual-container">
+            <div class="all-tasks-virtual-item-container" md-virtual-repeat="task in dynamicTasks" md-on-demand layout="column" ng-show="task"
+                 ng-class="{'not-approved-task-background': !task.is_approved}">
+                <div class="all-tasks-virtual-item" layout="row" layout-align="start center">
+                    <div class="all-tasks-virtual-item-clickable-aria" layout="row" layout-align="start center" flex="95"
+                         ng-click="dynamicTasks.viewTask(task.id)">
+                        <div flex="5">
+                            <md-button class="md-icon-button" ng-click="expand(task)" ng-disabled="!task.skills.length">
+                                <i class="mdi mdi-chevron-down mdi-24 rotate-base" aria-label="all-task-expand-button"
+                                   ng-class="{'rotate-btn': task.expanded}"></i>
+                            </md-button>
+                        </div>
+                        <div class="all-tasks-body-cell" flex="45">
+                            <span>{{task.title}}</span>
+                        </div>
+                        <div class="all-tasks-body-cell" flex="25">
+                            <span>{{task.author_name}}</span>
+                        </div>
+                        <div class="all-tasks-body-cell" flex="15">
+                            <span>{{task.date_created | date: 'dd/M/yyyy'}}</span>
+                        </div>
+                        <div class="all-tasks-body-cell" flex="10">
+                            <span style="float: right">{{task.exp | thousand}}</span>
+                        </div>
+                    </div>
+                    <div class="all-tasks-body-cell" flex="5">
+                        <skup-receive-button id="task.id" count="task.participants" disabled="!task.is_approved"
+                                        received="task.received" callback="dynamicTasks.taskReceived"></skup-receive-button>
+                    </div>
+                </div>
+                <div class="all-tasks-skills-container" layout="row" ng-if="task.expanded">
+                    <skup-skill-button ng-repeat="skill in task.skills" id="skill.skill_id" type="skill" count="skill.count">
+                    </skup-skill-button>
+                </div>
+            </div>
+            <div layout="column" layout-fill layout-align="center center" ng-if="!task">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </md-virtual-repeat-container>
+    </div>
+
+    <div flex="{{sidenavVisible ? 10 : 15}}" flex-md="5" hide-sm class="content-main-side"></div>
+</div>
